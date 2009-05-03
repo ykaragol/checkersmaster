@@ -33,10 +33,11 @@ public class GUIManager {
 					{
 						m[i][j]=1;
 					}
-					// eğer sağ çaprazı siyahsa üstünden atlat ve önceden bulunduğu yeri sıfırlayıp(blank yap) yeni yeri beyaz yap(1 yap)
-					else if (m[i+1][j+1]=2)
+					// eğer sağ çaprazı siyahsa ve siyahın arkası boşluksa üstünden atlat ve önceden bulunduğu yeri sıfırlayıp(blank yap) yeni yeri beyaz yap(1 yap)
+					else if (m[i+1][j+1]=2 and m[i+2][j+2] and i<=8 and j<=8 )
 					{
 						m[i][j]=0;
+						m[i+1][j+1]=0;
 						m[i+2][j+2]=1;
 					}
 					// eğer sağ çaprazı king beyazsa değişiklik yapma
@@ -47,9 +48,10 @@ public class GUIManager {
 					}
 					// eğer sağ çaprazı king siyahsa üstünden atlat ve önceden bulunduğu yeri sıfırlayıp(blank yap) yeni yeri beyaz yap(1 yap)
 
-					else (m[i+1][j+1]=4)
+					else (m[i+1][j+1]=4 and m[i+2][j+2] and i<=8 and j<=8 )
 					{
 						m[i][j]=0;
+						m[i+1][j+1]=0;
 						m[i+2][j+2]=1;
 					}
 				}

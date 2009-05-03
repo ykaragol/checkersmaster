@@ -24,7 +24,7 @@ public class GUIManager {
 // bir karedekini beyaz taþ kabul edip, çaprazlarýný kontrol edip hamle yaptýracaðýz. 
 		// i alt satýr, j yan sütun
 		for (int i=1;i<=8;i++){
-			for (int i=1;i<=8;i++){
+			for (int j=1;j<=8;j++){
 				//eðer bulunduðun yerde bir beyaz varsa
 				if (m[i][j]=1) 
 				{
@@ -34,7 +34,7 @@ public class GUIManager {
 						m[i][j]=1;
 					}
 					// eðer sað çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
-					else if (m[i+1][j+1]=2 and m[i+2][j+2] and i<=8 and j<=8 )
+					else if (m[i+1][j+1]=2 and m[i+2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
 					{
 						m[i][j]=0;
 						m[i+1][j+1]=0;
@@ -46,18 +46,50 @@ public class GUIManager {
 					{
 						m[i][j]=1;
 					}
-					// eðer sað çaprazý king siyahsa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+					// eðer sað çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
 
-					else (m[i+1][j+1]=4 and m[i+2][j+2] and i<=8 and j<=8 )
+					else if(m[i+1][j+1]=4 and m[i+2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
 					{
 						m[i][j]=0;
 						m[i+1][j+1]=0;
 						m[i+2][j+2]=1;
 					}
+					//eðer sol çaprazý da beyazsa deðiþiklik yapma
+					else if (m[i-1][j+1]=1)
+					{
+						m[i][j]=1;
+					}
+					// eðer sol çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+					else if (m[i-1][j+1]=2 and and m[i+2][j-2]=0 and 1<=i<=8 and 1<=j<=8)
+					{
+						m[i][j]=0;
+						m[i-1][j+1]=0;
+						m[i-2][j+2]=1;
+					}
+					//eðer sol çaprazý da king beyazsa deðiþiklik yapma
+					else if (m[i-1][j+1]=3)
+					{
+						m[i][j]=1;
+					}
+					// eðer sol çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+
+					else (m[i-1][j+1]=4 and m[i-2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
+					{
+						m[i][j]=0;
+						m[i-1][j+1]=0;
+						m[i-2][j+2]=1;
+					}
+					
 				}
-				// eðer bulunduðun yerde siyah varsa
-				else if 
 				
+			}
+		}
+			
+	// eðer bulunduðun yerde siyah varsa
+		for (int i=1;i<=8;i++){
+			for (int j=1;j<=8;j++){
+			{
+				if 
 					
 				}
 			}

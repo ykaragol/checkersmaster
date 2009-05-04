@@ -11,6 +11,23 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
+/*
+8 x o x o x o x o
+7 o x o x o x o x
+6 x o x o x o x o
+5 o x o x o x o x
+4 x o x o x o x o
+3 o x o x o x o x
+2 x o x o x o x o
+1 o x o x o x o x 
+  1 2 3 4 5 6 7 8 
+*/
+
+/**
+ * 
+ * @author ykaragol
+ */
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 
@@ -55,12 +72,24 @@ public class Board extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent event) {
-			// TODO Auto-generated method stub			
+			double width = Board.this.getWidth();
+			double height = Board.this.getHeight();
+			
+			int x = (int)(event.getX() / (width / 8)) + 1;
+			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
+			
+			System.err.println("Su noktada basildi:"+ x + " - " + y);
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent event) {
-			// TODO Auto-generated method stub			
+			double width = Board.this.getWidth();
+			double height = Board.this.getHeight();
+			
+			int x = (int)(event.getX() / (width / 8)) + 1;
+			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
+			
+			System.err.println("Su noktada birakildi:"+ x + " - " + y);	
 		}
 		
 	}

@@ -92,7 +92,6 @@ public class GUIManager {
 		}
 }
 
-	// eðer bulunduðun karede siyah varsa
 		// siyahlar farklý olarak matrisin son elemanlarýndan itibaren hareket etmeye baþlayacaklar
 		for (int i=1;i<=8;i++){
 			for (int j=8;1<=j;j--){

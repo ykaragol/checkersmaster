@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -34,6 +35,7 @@ import javax.swing.JPanel;
 public class Board extends JPanel {
 
 	private Image board = null;
+	private Image white = null;
 
 	public Image getBoard() {
 		return board;
@@ -46,16 +48,31 @@ public class Board extends JPanel {
 	public Board() throws IOException {
 		File f = new File("./img/board.jpg");
 		board = ImageIO.read(f);
-		addMouseListener(new BoardListener());
+		addMouseListener(new BoardMouseListener());
+		addMouseMotionListener(new BoardMouseMotionListener());
+		
+		f = new File("./img/white.gif");
+		white = ImageIO.read(f);
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawImage(board, 0, 0, 605, 605, null);
+		
+		int [][] matrix = new int[8][8];
+		matrix[0][2] = 1;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if(matrix[i][j] == 1){
+					double p = getHeight() / 8;
+					g.drawImage(white, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
+				}
+			}
+		}
 	}
 	
-	private class BoardListener implements MouseListener{
+	private class BoardMouseListener implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent event) {
@@ -92,6 +109,22 @@ public class Board extends JPanel {
 			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
 			
 			System.err.println("Su noktada birakildi:"+ x + " - " + y);	
+		}
+		
+	}
+	
+	private class BoardMouseMotionListener implements MouseMotionListener{
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}

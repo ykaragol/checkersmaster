@@ -26,15 +26,15 @@ public class GUIManager {
 		for (int i=1;i<=8;i++){
 			for (int j=1;j<=8;j++){
 				//eðer bulunduðun yerde bir beyaz varsa
-				if (m[i][j]=1) 
+				if (m[i][j]==1) 
 				{
 					//eðer sað çaprazý da beyazsa deðiþiklik yapma
-					if (m[i+1][j+1]=1)
+					if (m[i+1][j+1]==1)
 					{
 						m[i][j]=1;
 					}
 					// eðer sað çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
-					else if (m[i+1][j+1]=2 and m[i+2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
+					else if (m[i+1][j+1]==2 && m[i+2][j+2]==0)
 					{
 						m[i][j]=0;
 						m[i+1][j+1]=0;
@@ -42,38 +42,38 @@ public class GUIManager {
 					}
 					// eðer sað çaprazý king beyazsa deðiþiklik yapma
 
-					else if (m[i+1][j+1]=3)
+					else if (m[i+1][j+1]==3)
 					{
 						m[i][j]=1;
 					}
 					// eðer sað çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
 
-					else if(m[i+1][j+1]=4 and m[i+2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
+					else if(m[i+1][j+1]==4 && m[i+2][j+2]==0)
 					{
 						m[i][j]=0;
 						m[i+1][j+1]=0;
 						m[i+2][j+2]=1;
 					}
-					//eðer sol çaprazý da beyazsa deðiþiklik yapma
-					else if (m[i-1][j+1]=1)
+					//eðer sol çaprazý beyazsa deðiþiklik yapma
+					else if (m[i-1][j+1]==1)
 					{
 						m[i][j]=1;
 					}
 					// eðer sol çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
-					else if (m[i-1][j+1]=2 and and m[i+2][j-2]=0 and 1<=i<=8 and 1<=j<=8)
+					else if (m[i-1][j+1]==2 && m[i+2][j-2]==0)
 					{
 						m[i][j]=0;
 						m[i-1][j+1]=0;
 						m[i-2][j+2]=1;
 					}
 					//eðer sol çaprazý da king beyazsa deðiþiklik yapma
-					else if (m[i-1][j+1]=3)
+					else if (m[i-1][j+1]==3)
 					{
 						m[i][j]=1;
 					}
 					// eðer sol çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
 
-					else (m[i-1][j+1]=4 and m[i-2][j+2]=0 and 1<=i<=8 and 1<=j<=8 )
+					else (m[i-1][j+1]==4 && m[i-2][j+2]==0)
 					{
 						m[i][j]=0;
 						m[i-1][j+1]=0;
@@ -86,10 +86,53 @@ public class GUIManager {
 		}
 			
 	// eðer bulunduðun yerde siyah varsa
-		for (int i=1;i<=8;i++){
-			for (int j=1;j<=8;j++){
+		// siyahlar farklý olarak matrisin son elemanlarýndan itibaren hareket etmeye baþlayacaklar
+		for (int i=1;i<=8;i++)
+		{
+			for (int j=8;1<=j;j--)
 			{
-				if 
+				// eðer bulunduðun karede siyah varsa
+				if m[i][j]==2{
+					//eðer sað çaprazý da siyahsa deðiþiklik yapma
+					if m[i-1][j-1]==2{ 
+						m[i][j]=2;
+					}
+					// eðer sað çaprazý beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+					else if (m[i-1][j-1]==1 && m[i-2][j-2]==0){
+					m[i-2][j-2]=2;
+					m[i-1][j-1]=0;
+					m[i][j]=0;
+					}
+					// eðer sað çaprazý king siyahsa deðiþiklik yapma
+					else if (m[i-1][j-1]==4){
+						m[i][j]=2;
+					}
+					// eðer sað çaprazý king beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+					else if (m[i-1][j-1]==3 && m[i-2][j-2]==0){
+						m[i-2][j-2]=2;
+						m[i-1][j-1]=0;
+						m[i][j]=0;
+					}
+					//eðer sol çaprazý da siyahsa deðiþiklik yapma
+					else if (m[i+1][j-1]==2){
+						m[i][j]=2;
+					}
+					// eðer sol çaprazý beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+					else if (m[i+1][j-1]==1 && m[i+2][j-2]==0){
+						m[i+2][j-2]=2;
+						m[i+1][j-1]=0;
+						m[i][j]=0;
+					}
+					//eðer sol çaprazý da king siyahsa deðiþiklik yapma
+					else if (m[i+1][j-1]==4){
+						m[i][j]=2;
+					}
+					// eðer sol çaprazý king beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+					else if (m[i+1][j-1]==3 && m[i+2][j-2]==0){
+						m[i+1][j-1]=0;
+						m[i+2][j-2]=2;
+						m[i][j]=0;
+
 					
 				}
 			}

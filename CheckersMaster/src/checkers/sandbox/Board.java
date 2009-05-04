@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 */
 
 /**
+ * Checkers için oyun tahtasýný oluþturan kod.
+ * 
  * 
  * @author ykaragol
  */

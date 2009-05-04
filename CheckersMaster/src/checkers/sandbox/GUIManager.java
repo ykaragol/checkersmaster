@@ -84,6 +84,19 @@ public class GUIManager {
 				
 			}
 		}
+		//eðer beyazlar 8. satýra ulaþmýþsa king beyaz olurlar
+		for (i=1;i<=8;i++){
+			if m[i][8]=1;{
+				m[i][8]=3;
+			}
+		}
+		
+		
+			}
+		}
+		
+			}
+		}
 			
 	// eðer bulunduðun yerde siyah varsa
 		// siyahlar farklý olarak matrisin son elemanlarýndan itibaren hareket etmeye baþlayacaklar
@@ -136,8 +149,15 @@ public class GUIManager {
 					
 				}
 			}
-
 		}
+			
+			//eðer siyahlarlar 1. satýra ulaþmýþsa king siyah olurlar
+           for (i=8;1<=i;i--){
+				if m[i][1]=2;{ 
+					m[i][1]=4;
+				}
+			}
+			
 		List<Move> nextMoves = successors(m,1);
 	}
 

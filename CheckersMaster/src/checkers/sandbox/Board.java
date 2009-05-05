@@ -60,11 +60,11 @@ public class Board extends JPanel {
 		super.paint(g);
 		g.drawImage(board, 0, 0, 605, 605, null);
 		
-		int [][] matrix = new int[8][8];
-		matrix[0][2] = 1;
+		SquareState [][] matrix = new Model().state;
+		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if(matrix[i][j] == 1){
+				if(matrix[j][i] == SquareState.WHITE){
 					double p = getHeight() / 8;
 					g.drawImage(white, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
 				}

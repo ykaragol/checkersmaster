@@ -85,7 +85,7 @@ public class GUIManager {
 			}
 		}
 		//eðer beyazlar 8. satýra ulaþmýþsa king beyaz olurlar
-		for (i=1;i<=8;i++){
+		for (int i=1;i<=8;i++){
 			if m[i][8]=1;{
 				m[i][8]=3;
 			}
@@ -140,16 +140,138 @@ public class GUIManager {
 			}
 		}
 			//eðer siyahlarlar 1. satýra ulaþmýþsa king siyah olurlar
-           for (i=8;1<=i;i--){
+           for (int i=8;1<=i;i--){
 				if m[i][1]=2;{ 
 					m[i][1]=4;
 				}
 			}
+           
+           
+           for (int i=1;i<=8;i++){
+        	   for (int j=1;j<=8;j++){
+        		   for (int k=1;k<=6;k++){
+        		// eðer bulunduðun karede king beyaz varsa
+        		   if (m[i][j]==3){
+        				   //eðer king beyaz ön sað çaprazýnda siyahla karþýlaþýrsa
+        			   if (m[i+k][j+k]==2 && m[i+k+1][j+k+1]==0 && (i+k)<=7 && (j+k)<=7){
+        				   // üst satýra i+k<=7 ve j+k<=7 dememin nedeni, eðer 8 deseydim, siyah taþ 8'li bir satýr ya da 8'l bir sütunda da olabilirdi. 
+        				   //ama beyaz kingin gidecek bir yeri olmazdý. beyaz king en son gitse gitse 8'li satýr ya da sütunlara
+        				   //ulaþabileceði için i+k ve j+k sýnýrlarýný 7 ile sýnýrladým.
+        				   m[i][j]=0;
+        				   m[i+k][j+k]=0;
+        				   m[i+k+1][j+k+1]=3;
+        			   }
+    				   //king beyaz ön sað çaprazýnda king siyahla karþýlaþýrsa
+        			   else if (m[i+k][j+k]==4 && m[i+k+1][j+k+1]==0 && (i+k)<=7 && (j+k)<=7){
+        				   m[i][j]=0;
+        				   m[i+k][j+k]=0;
+        				   m[i+k+1][j+k+1]=3;
+        			   }
+        			   //king beyaz ön sol çaprazýnda siyahla karþýlaþýrsa
+        			   else if (m[i-k][j+k]==2 && m[i-k-1][j+k+1]==0 && (i-k)>=2 && (j+k)<=7){
+        				   m[i][j]=0;
+        				   m[i-k][j+k]=0;
+        				   m[i-k-1][j+k+1]=3;
+        			   }
+        			 //king beyaz ön sol çaprazýnda king siyahla karþýlaþýrsa
+        			   else if (m[i-k][j+k]==4 && m[i-k-1][j+k+1]==0 && (i-k)>=2 && (j+k)<=7){
+        				   m[i][j]=0;
+        				   m[i-k][j+k]=0;
+        				   m[i-k-1][j+k+1]=3;
+        			   }
+        			   //king beyaz arka sað çaprazýnda siyahla karþýlaþýrsa
+        			   else if (m[i+k][j-k]==2 && m[i+k+1][j-k-1]==0 && (i+k)<=7 && (j-k)>=2){
+        				   m[i][j]=0;
+        				   m[i+k][j-k]=0;
+        				   m[i+k+1][j-k-1]=3;
+        			   }
+        			 //king beyaz arka sað çaprazýnda king siyahla karþýlaþýrsa
+        			   else if (m[i+k][j-k]==4 && m[i+k+1][j-k-1]==0 && (i+k)<=7 && (j-k)>=2){
+        				   m[i][j]=0;
+        				   m[i+k][j-k]=0;
+        				   m[i+k+1][j-k-1]=3;
+        			   }
+        			 //king beyaz arka sol çaprazýnda siyahla karþýlaþýrsa
+        			   else if (m[i-k][j-k]==2 && m[i-k-1][j-k-1]==0 && (i-k)>=2 && (j-k)>=2){
+        				   m[i][j]=0;
+        				   m[i-k][j-k]=0;
+        				   m[i-k-1][j-k-1]=3;
+        			   }
+        			   //king beyaz arka sol çaprazýnda king siyahla karþýlaþýrsa
+        			   else if (m[i-k][j-k]==4 && m[i-k-1][j-k-1]==0 && (i-k)>=2 && (j-k)>=2){
+        				   m[i][j]=0;
+        				   m[i-k][j-k]=0;
+        				   m[i-k-1][j-k-1]=3;
+        			   }
+        		   }
+        		   }
+        	   }
+           }
+           
+           for (int i=1;i<=8;i++){
+        	   for (int j=1;j<=8;j++){
+        		   for (int k=1;k<=6;k++){
+        		// eðer bulunduðun karede king siyah varsa
+            		   if (m[i][j]==4){
+            			//eðer king siyah ön sað çaprazýnda beyazla karþýlaþýrsa
+            			   if (m[i-k][j-k]==1 && m[i-k-1][j-k-1]==0 && (i-k)>=2 && (j-k)>=2){
+            				   m[i][j]=0;
+            				   m[i-k][j-k]=0;
+            				   m[i-k-1][j-k-1]=4;
+            			   }
+        				   //king siyah ön sað çaprazýnda king beyazla karþýlaþýrsa
+            			   if (m[i-k][j-k]==3 && m[i-k-1][j-k-1]==0 && (i-k)>=2 && (j-k)>=2){
+            				   m[i][j]=0;
+            				   m[i-k][j-k]=0;
+            				   m[i-k-1][j-k-1]=4;
+            			   }
+            			   //king siyah ön sol çaprazýnda beyazla karþýlaþýrsa
+            			   else if (m[i+k][j-k]==1 && m[i+k+1][j-k-1]==0 && (j-k)>=2 && (i+k)<=7){
+            				   m[i][j]=0;
+            				   m[i+k][j-k]=0;
+            				   m[i+k+1][j-k-1]=4;
+            			   }
+            			 //king siyah ön sol çaprazýnda king beyazla karþýlaþýrsa
+            			   else if (m[i+k][j-k]==3 && m[i+k+1][j-k-1]==0 && (j-k)>=2 && (i+k)<=7){
+            				   m[i][j]=0;
+            				   m[i+k][j-k]=0;
+            				   m[i+k+1][j-k-1]=4;
+            			   }
+            			   //king siyah arka sað çaprazýnda beyazla karþýlaþýrsa
+            			   else if (m[i-k][j+k]==1 && m[i-k-1][j+k+1]==0 && (j+k)<=7 && (i-k)>=2){
+            				   m[i][j]=0;
+            				   m[i-k][j+k]=0;
+            				   m[i-k-1][j+k+1]=4;
+            			   }
+            			   //king siyah arka sað çaprazýnda king beyazla karþýlaþýrsa
+            			   else if (m[i-k][j+k]==3 && m[i-k-1][j+k+1]==0 && (j+k)<=7 && (i-k)>=2){
+            				   m[i][j]=0;
+            				   m[i-k][j+k]=0;
+            				   m[i-k-1][j+k+1]=4;
+            			   }
+            			 //king siyah arka sol çaprazýnda beyazla karþýlaþýrsa
+            			   else if (m[i+k][j+k]==1 && m[i+k+1][j+k+1]==0 && (i+k)<=7 && (j+k)<=7){
+            				   m[i][j]=0;
+            				   m[i+k][j+k]=0;
+            				   m[i+k+1][j+k+1]=4;
+            			   }
+            			   //king siyah arka sol çaprazýnda king beyazla karþýlaþýrsa
+            			   else if (m[i+k][j+k]==3 && m[i+k+1][j+k+1]==0 && (i+k)<=7 && (j+k)<=7){
+            				   m[i][j]=0;
+            				   m[i+k][j+k]=0;
+            				   m[i+k+1][j+k+1]=4;
+            			   }
+            		   }
+            		   }
+            	   }
+               }
+               
+        		
 			
 		List<Move> nextMoves = successors(m,1);
 	}
 
-	private static List<Move> successors(int[][] m, int i) {
+	private static List<Move> successors(int[][]m , int i) {
 		List<Move> list = new LinkedList<Move>();
 		
 		return list;

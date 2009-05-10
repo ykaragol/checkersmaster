@@ -60,7 +60,9 @@ public class Board extends JPanel {
 		super.paint(g);
 		g.drawImage(board, 0, 0, 605, 605, null);
 		
-		SquareState [][] matrix = new Model().state;
+		Model model = new Model();
+		model.baslat();
+		SquareState [][] matrix = model.state;
 		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {

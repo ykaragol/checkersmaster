@@ -1,5 +1,6 @@
 package checkers.evaluation;
 
+import checkers.domain.Player;
 import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
@@ -8,9 +9,10 @@ import checkers.sandbox.SquareState;
  * @author hacer_catal
  *
  */
-public class MenCountEvaluation {
+public class MenCountEvaluation implements IEvaluation{
 	
-	public int evaluate(Model m, SquareState player){
+	@Override
+	public double evaluate(Model m, Player player){
 		int count = 0;
 		SquareState[][] state = m.state;
 		for (int i = 0; i < state.length; i++) {
@@ -21,23 +23,23 @@ public class MenCountEvaluation {
 					throw new IllegalStateException(msg);
 				}
 				switch (currentSquare) {
-				case BLACK:
-					count ++;
-					break;
-				case KING_BLACK:
-					count ++;
-					break;
-				case WHITE:
-					count --;
-					break;
-				case KING_WHITE:
-					count --;
-					break;
-				default:
-					break;
+					case BLACK:
+						count ++;
+						break;
+					case KING_BLACK:
+						count ++;
+						break;
+					case WHITE:
+						count --;
+						break;
+					case KING_WHITE:
+						count --;
+						break;
+					default:
+						break;
 				}
 			}
 		}
-		return count * (player==SquareState.BLACK ? 1:-1);
+		return count * (player==Player.BLACK ? 1:-1);
 	}		
 }

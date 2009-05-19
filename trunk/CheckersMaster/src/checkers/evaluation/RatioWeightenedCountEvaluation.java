@@ -1,17 +1,19 @@
 package checkers.evaluation;
 
+
 import checkers.domain.Player;
 import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
-public class WeightenedMenCountEvaluation implements IEvaluation{
+public class RatioWeightenedCountEvaluation implements IEvaluation{
 	
 	/*friendly*/ final static int MEN_WEIGHT = 1;
 	/*friendly*/ final static int KING_WEIGHT = 3;
 
 	@Override
 	public double evaluate(Model m, Player player) {
-		int count = 0;
+		int whiteCount = 0;
+		int blackCount = 0;
 		SquareState[][] state = m.state;
 		for (int i = 0; i < state.length; i++) {
 			for (int j = 0; j < state[i].length; j++) {
@@ -22,23 +24,27 @@ public class WeightenedMenCountEvaluation implements IEvaluation{
 				}
 				switch (currentSquare) {
 				case BLACK:
-					count += MEN_WEIGHT;
+					whiteCount += MEN_WEIGHT;
 					break;
 				case KING_BLACK:
-					count += KING_WEIGHT;
+					whiteCount += KING_WEIGHT;
 					break;
 				case WHITE:
-					count -= MEN_WEIGHT;
+					blackCount += MEN_WEIGHT;
 					break;
 				case KING_WHITE:
-					count -= KING_WEIGHT;
+					blackCount += KING_WEIGHT;
 					break;
 				default:
 					break;
 				}
 			}
 		}
-		return count * (player==Player.BLACK ? 1:-1);
+		
+		if (player==Player.BLACK){
+			return blackCount/whiteCount;
+		}else{
+			return whiteCount/blackCount;
+		}		
 	}
-
 }

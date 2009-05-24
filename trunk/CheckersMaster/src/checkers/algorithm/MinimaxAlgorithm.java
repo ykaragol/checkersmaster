@@ -21,7 +21,7 @@ public class MinimaxAlgorithm {
 			return move;
 		}
 		context.setDepth(context.getDepth()-1);
-		List<Move> successors = getSuccessors(context,model);
+		List<Move> successors = getSuccessors(context, model, whosTurn);
 		boolean isAssigned = false;
 		int value = 0;
 		Move selectedMove = null;
@@ -31,16 +31,19 @@ public class MinimaxAlgorithm {
 			if(!isAssigned){
 				isAssigned = true;
 				value = minimax.getValue();
+				move.next = minimax;
 				selectedMove = move;
 			}else{
 				if(context.getPlayer() == whosTurn){
 					if(minimax.getValue()> value){
 						selectedMove = move;
+						move.next = minimax;
 						value = minimax.getValue();
 					}
 				}else{
 					if(minimax.getValue()< value){
 						selectedMove = move;
+						move.next = minimax;
 						value = minimax.getValue();
 					}
 				}
@@ -53,14 +56,13 @@ public class MinimaxAlgorithm {
 
 	private int evaluateModel(CalculationContext context, Model model) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
-		Player player = context.getPlayer();
-		return (int) evaluationFunction.evaluate(model,player);
+		return (int) evaluationFunction.evaluate(model,context.getPlayer());
 		// TODO:geri dönecek olan sayý tipi int deðil double olacak.
 	}
 	
-	private List<Move> getSuccessors(CalculationContext context, Model model) {
+	private List<Move> getSuccessors(CalculationContext context, Model model, Player whosTurn) {
 		ISuccessor successor = context.getSuccessorFunction();
-		List<Move> successors = successor.getSuccessors(model, context.getPlayer());
+		List<Move> successors = successor.getSuccessors(model, whosTurn);
 		return successors;
 	}
 

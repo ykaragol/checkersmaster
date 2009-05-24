@@ -8,7 +8,9 @@ import checkers.domain.Player;
 import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
-public class Successors {
+public class Successors  implements ISuccessor{
+	
+	@Override
 	public List<Move> getSuccessors(Model model, Player player) {
 		LinkedList<Move> list = new LinkedList<Move>();
 		//bir karedekini beyaz taþ kabul edip, çaprazlarýný kontrol edip hamle yaptýracaðýz. 
@@ -19,25 +21,349 @@ public class Successors {
 				SquareState square = state[i][j];
 				switch (square) {
 				case BLACK:
+					if(player==Player.BLACK)
+						handleBlackStone(list, state, i, j);
 					break;
 				case KING_BLACK:
+					if(player==Player.BLACK)
+						handleWhiteKingStone(list, state, i, j);
 					break;
 				case WHITE:
-					handleWhiteStone();
+					if(player==Player.WHITE)
+						handleWhiteStone(list, state, i, j);
 					break;
 				case KING_WHITE:
+					if(player==Player.WHITE)
+						handleWhiteKingStone(list, state, i, j);
 					break;
 				default:
 					break;
 				}
 			}
 		}
+		handleList(list);
 		return list;
 	}
 
-	private void handleWhiteStone() {
-		// TODO Auto-generated method stub
+	private void handleList(LinkedList<Move> list) {
+		boolean hasMust = false;
+		for (Move move : list) {
+			if(move.must){
+				hasMust = true;
+				break;
+			}
+		}
+		if(hasMust){
+			LinkedList<Move> linkedList = new LinkedList<Move>(list);
+			for (Move move : linkedList) {
+				if(!move.must){
+					list.remove(move);
+				}
+			}
+		}
+	}
+
+	private void handleWhiteStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
+		//basit bir taþ sadece ileriye gidebilir...
+		if(forwardCheck(state, i)){
+			throw new IllegalStateException();
+		}
+		SquareState currentSquare = state[i][j];
+		SquareState rightForward = rightForward(state,i,j);
+		if(rightForward != null){
+			if(rightForward.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i+1;
+				move.toY = j+1;
+				list.add(move);
+			}else if(rightForward.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoRightForward = twoRightForward(state,i,j);
+				if(twoRightForward == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i+2;
+					move.toY = j+2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+		SquareState leftForward = leftForward(state,i,j);
+		if(leftForward != null){
+			if(leftForward.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i+1;
+				move.toY = j-1;
+				list.add(move);
+			}else if(leftForward.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoLeftForward = twoLeftForward(state,i,j);
+				if(twoLeftForward == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i+2;
+					move.toY = j-2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+	}
+
+	private void handleWhiteKingStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
+		SquareState currentSquare = state[i][j];
+		SquareState rightForward = rightForward(state,i,j);
+		if(rightForward != null){
+			if(rightForward.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i+1;
+				move.toY = j+1;
+				list.add(move);
+			}else if(rightForward.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoRightForward = twoRightForward(state,i,j);
+				if(twoRightForward == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i+2;
+					move.toY = j+2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+		SquareState leftForward = leftForward(state,i,j);
+		if(leftForward != null){
+			if(leftForward.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i+1;
+				move.toY = j-1;
+				list.add(move);
+			}else if(leftForward.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoLeftForward = twoLeftForward(state,i,j);
+				if(twoLeftForward == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i+2;
+					move.toY = j-2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
 		
+		SquareState rightButtom = rightButtom(state,i,j);
+		if(rightButtom != null){
+			if(rightButtom.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i-1;
+				move.toY = j+1;
+				list.add(move);
+			}else if(rightButtom.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoRightButtom = twoRightButtom(state,i,j);
+				if(twoRightButtom == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i-2;
+					move.toY = j+2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+		SquareState leftButtom = leftButtom(state,i,j);
+		if(leftButtom != null){
+			if(leftButtom.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i-1;
+				move.toY = j-1;
+				list.add(move);
+			}else if(leftButtom.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoLeftButtom = twoLeftButtom(state,i,j);
+				if(twoLeftButtom == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i-2;
+					move.toY = j-2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+	}
+	
+
+	private void handleBlackStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
+		//basit bir taþ sadece ileriye gidebilir...
+		if(buttomCheck(state, i)){
+			throw new IllegalStateException();
+		}
+		SquareState currentSquare = state[i][j];
+		SquareState rightButtom = rightButtom(state,i,j);
+		if(rightButtom != null){
+			if(rightButtom.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i-1;
+				move.toY = j+1;
+				list.add(move);
+			}else if(rightButtom.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoRightButtom = twoRightButtom(state,i,j);
+				if(twoRightButtom == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i-2;
+					move.toY = j+2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+		SquareState leftButtom = leftButtom(state,i,j);
+		if(leftButtom != null){
+			if(leftButtom.owner == null){
+				//gidebilir:
+				Move move = new Move();
+				move.fromX=i;
+				move.fromY=j;
+				move.toX = i-1;
+				move.toY = j-1;
+				list.add(move);
+			}else if(leftButtom.owner == currentSquare.owner){
+				//gidemez
+			}else {
+				//yerse gidebilir...
+				SquareState twoLeftButtom = twoLeftButtom(state,i,j);
+				if(twoLeftButtom == SquareState.BLANK){
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i-2;
+					move.toY = j-2;
+					list.add(move);
+					move.must = true;
+				}
+			}
+		}
+	}
+	
+	//iki sol altýn deðerini getirir
+	private SquareState twoLeftButtom(SquareState[][] state, int i, int j) {
+		if(i-2>=0 &&  j-2 >= 0){
+			return state[i-2][j-2];
+		}
+		return null;
+	}
+
+	//sol altýn deðerini getirir
+	private SquareState leftButtom(SquareState[][] state, int i, int j) {
+		if(i-1>=0 &&  j-1 >= 0){
+			return state[i-1][j-1];
+		}
+		return null;
+	}
+
+	//iki sað altýn deðerini getirir
+	private SquareState twoRightButtom(SquareState[][] state, int i, int j) {
+		if( i-2 > 0 && j+2 < state[i].length){
+			return state[i-2][j+2];
+		}
+		return null;
+	}
+
+	//sað altýn deðerini getirir
+	private SquareState rightButtom(SquareState[][] state, int i, int j) {
+		if(i-1>=0 &&  j+1 < state[i].length){
+			return state[i-1][j+1];
+		}
+		return null;
+	}
+
+	private SquareState twoRightForward(SquareState[][] state, int i, int j) {
+		if( i+3 < state.length && j+2 < state[i].length){
+			return state[i+2][j+2];
+		}
+		return null;
+	}
+	
+	private SquareState twoLeftForward(SquareState[][] state, int i, int j) {
+		if( i+3 < state.length && j-2 >= 0){
+			return state[i+2][j-2];
+		}
+		return null;
+	}
+
+
+	//sol önünü deðerini getirir..
+	private SquareState leftForward(SquareState[][] state, int i, int j) {
+		if(j-1 >= 0){
+			return state[i+1][j-1];
+		}
+		return null;
+	}
+	
+	//sað önün deðerini getirir..
+	private SquareState rightForward(SquareState[][] state, int i, int j) {
+		if(j+1 < state[i].length){
+			return state[i+1][j+1];
+		}
+		return null;
+	}
+
+	//ileriye gidebilir mi?
+	private boolean forwardCheck(SquareState[][] state, int i) {
+		return i+1 >= state.length;
+	}
+	
+	//ileriye gidebilir mi?
+	private boolean buttomCheck(SquareState[][] state, int i) {
+		return i+1 >= state.length;
 	}
 }
 

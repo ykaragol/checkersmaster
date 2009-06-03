@@ -12,6 +12,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import checkers.domain.Model;
+import checkers.domain.Move;
+
 
 /*
 8 x o x o x o x o
@@ -34,8 +37,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 
+	private Model model = new Model();
 	private Image board = null;
 	private Image white = null;
+	private Image black = null;
 
 	public Image getBoard() {
 		return board;
@@ -53,6 +58,12 @@ public class Board extends JPanel {
 		
 		f = new File("./img/white.gif");
 		white = ImageIO.read(f);
+		
+		f = new File("./img/black.gif");
+		black = ImageIO.read(f);
+		
+		model.setCallback(this);
+		model.baslat();
 	}
 
 	@Override
@@ -60,8 +71,6 @@ public class Board extends JPanel {
 		super.paint(g);
 		g.drawImage(board, 0, 0, 605, 605, null);
 		
-		Model model = new Model();
-		model.baslat();
 		SquareState [][] matrix = model.state;
 		
 		for (int i = 0; i < matrix.length; i++) {
@@ -69,6 +78,9 @@ public class Board extends JPanel {
 				if(matrix[j][i] == SquareState.WHITE){
 					double p = getHeight() / 8;
 					g.drawImage(white, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
+				}else if(matrix[j][i] == SquareState.BLACK){
+					double p = getHeight() / 8;
+					g.drawImage(black, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
 				}
 			}
 		}
@@ -90,6 +102,8 @@ public class Board extends JPanel {
 		public void mouseExited(MouseEvent event) {
 			// TODO Auto-generated method stub			
 		}
+		
+		private int _x,_y;
 
 		@Override
 		public void mousePressed(MouseEvent event) {
@@ -99,7 +113,10 @@ public class Board extends JPanel {
 			int x = (int)(event.getX() / (width / 8)) + 1;
 			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
 			
-			System.err.println("Su noktada basildi:"+ x + " - " + y);
+			//System.err.println("Su noktada basildi:"+ x + " - " + y);
+			
+			_x=x;
+			_y=y;
 		}
 
 		@Override
@@ -110,7 +127,13 @@ public class Board extends JPanel {
 			int x = (int)(event.getX() / (width / 8)) + 1;
 			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
 			
-			System.err.println("Su noktada birakildi:"+ x + " - " + y);	
+			//System.err.println("Su noktada birakildi:"+ x + " - " + y);
+			Move move  = new Move();
+			move.fromX = _x-1;
+			move.fromY = 8-_y;
+			move.toX = x-1;
+			move.toY = 8-y;
+			model.doMove(move);
 		}
 		
 	}

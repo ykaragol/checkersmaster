@@ -13,13 +13,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import checkers.domain.CalculationContext;
+import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.evaluation.MenCountEvaluation;
 import checkers.rules.ISuccessor;
 import checkers.rules.Successors;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 public class TestMinimaxAlgorithm {
@@ -134,7 +134,7 @@ public class TestMinimaxAlgorithm {
 	
 	@Test
 	public void testAlgorithmFully(){
-		context.setDepth(2);
+		context.setDepth(3);
 		context.setEvaluationFunction(evaluation);
 		
 		Successors successors = new Successors();
@@ -151,11 +151,12 @@ public class TestMinimaxAlgorithm {
 		assertEquals(4,minimax.fromX);
 		assertEquals(5,minimax.toX);
 		assertTrue(4==minimax.toY || 1 == minimax.toY);
-		
-		assertEquals(5, minimax.next.fromX);
-		assertEquals(0, minimax.next.fromY);
+		assertEquals(2, minimax.getValue());
+
 		assertEquals(4, minimax.next.toX);
 		assertEquals(1, minimax.next.toY);
+		assertEquals(5, minimax.next.fromX);
+		assertEquals(0, minimax.next.fromY);
 	}
 	
 	

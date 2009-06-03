@@ -3,9 +3,9 @@ package checkers.rules;
 import java.util.LinkedList;
 import java.util.List;
 
+import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 public class Successors  implements ISuccessor{

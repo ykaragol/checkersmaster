@@ -3,7 +3,11 @@ package checkers.domain;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
-
+/**
+ * Tüm algoritmalar için yapýlandýrma parametreleri içerir.
+ * @author hacer_catal
+ *
+ */
 public class CalculationContext{
 
 	private int depth;

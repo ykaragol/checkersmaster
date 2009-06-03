@@ -3,11 +3,11 @@ package checkers.algorithm;
 import java.util.List;
 
 import checkers.domain.CalculationContext;
+import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
-import checkers.sandbox.Model;
 
 public class MinimaxAlgorithm {
 
@@ -15,19 +15,27 @@ public class MinimaxAlgorithm {
 		if(context == null || model == null) {
 			throw new IllegalArgumentException();
 		}
-		if(context.getDepth()==0){
+		return minimax(context, model, whosTurn, 0);
+	}
+
+	/*friendly*/ Move minimax(CalculationContext context, Model model, Player whosTurn, int depth) {
+		if(context.getDepth()==depth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
 			return move;
 		}
-		context.setDepth(context.getDepth()-1);
 		List<Move> successors = getSuccessors(context, model, whosTurn);
+		if(successors.isEmpty()){
+			Move move = new Move();
+			move.setValue(evaluateModel(context, model));
+			return move;
+		}
 		boolean isAssigned = false;
 		int value = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
-			model.doMove(move);
-			Move minimax = minimax(context, model, whosTurn.opposite());
+			model.tryMove(move);
+			Move minimax = minimax(context, model, whosTurn.opposite(), depth+1);
 			if(!isAssigned){
 				isAssigned = true;
 				value = minimax.getValue();
@@ -48,7 +56,7 @@ public class MinimaxAlgorithm {
 					}
 				}
 			}
-			model.undoMove(move);
+			model.undoTryMove(move);
 		}
 		selectedMove.setValue(value);
 		return selectedMove;

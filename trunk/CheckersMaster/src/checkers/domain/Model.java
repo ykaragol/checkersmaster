@@ -1,6 +1,11 @@
-package checkers.sandbox;
+package checkers.domain;
 
-import checkers.domain.Move;
+import checkers.algorithm.MinimaxAlgorithm;
+import checkers.evaluation.IEvaluation;
+import checkers.evaluation.WeightenedMenCountEvaluation;
+import checkers.rules.Successors;
+import checkers.sandbox.Board;
+import checkers.sandbox.SquareState;
 
 /**
  * 
@@ -9,6 +14,9 @@ import checkers.domain.Move;
 public class Model {
 	
 	public SquareState state[][];
+	private Board callBack;
+	private CalculationContext context;
+	private MinimaxAlgorithm algorithm = new MinimaxAlgorithm();
 
 	public void baslat(){
 		SquareState ilk[][] = {
@@ -20,8 +28,15 @@ public class Model {
 				{SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK},
 				{SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK},
 				{SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK},
+				
 		};
 		state = ilk;
+		context = new CalculationContext();
+		IEvaluation evaluation = new WeightenedMenCountEvaluation();
+		context.setEvaluationFunction(evaluation);
+		context.setDepth(2);
+		context.setPlayer(Player.WHITE);
+		context.setSuccessorFunction(new Successors());
 	}
 
 	public void bos(){
@@ -34,21 +49,39 @@ public class Model {
 		state = bos;
 	}
 	
-	public void doMove(Move move) {
-		state[move.toX][move.toY]=state[move.fromX][move.fromY];
-		state[move.fromX][move.fromY] = SquareState.BLANK;
+	public void tryMove(Move move) {
+		state[move.toY][move.toX]=state[move.fromY][move.fromX];
+		state[move.fromY][move.fromX] = SquareState.BLANK;
 		if(move.must){
-			move.eat = state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2];
-			state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2] = SquareState.BLANK;
+			move.eat = state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2];
+			state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2] = SquareState.BLANK;
 		}
 	}
 
-	public void undoMove(Move move) {
+	public void doMove(Move move) {
+		state[move.toY][move.toX]=state[move.fromY][move.fromX];
+		state[move.fromY][move.fromX] = SquareState.BLANK;
+		if(move.must){
+			move.eat = state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2];
+			state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2] = SquareState.BLANK;
+		}
+		callBack.updateUI();
+		Move minimax = algorithm.minimax(context, this, Player.BLACK);
+		tryMove(minimax);
+		callBack.updateUI();
+	}
+	
+	
+	public void undoTryMove(Move move) {
 		state[move.fromX][move.fromY]=state[move.toX][move.toY];
 		state[move.toX][move.toY] = SquareState.BLANK;
 		if(move.eat != null){
 			state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2] = move.eat;
 		}
+	}
+	
+	public void setCallback(Board callBack){
+		this.callBack = callBack;
 	}
 	
 /*	

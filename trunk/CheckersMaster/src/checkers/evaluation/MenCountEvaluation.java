@@ -1,7 +1,7 @@
 package checkers.evaluation;
 
+import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 /**
@@ -11,6 +11,7 @@ import checkers.sandbox.SquareState;
  */
 public class MenCountEvaluation implements IEvaluation{
 	
+	//TODO : bir tarafýn hiç oynayabilecek elemaný kalmadýysa, oyun bittiyse vs. geriye int_min falan dön..
 	@Override
 	public double evaluate(Model m, Player player){
 		int count = 0;

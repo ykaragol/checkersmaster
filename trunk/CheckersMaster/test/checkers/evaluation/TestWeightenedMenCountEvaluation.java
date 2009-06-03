@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 public class TestWeightenedMenCountEvaluation {

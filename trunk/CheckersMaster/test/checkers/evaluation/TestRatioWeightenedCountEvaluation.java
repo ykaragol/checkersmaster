@@ -6,10 +6,9 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.org.apache.xpath.internal.operations.Div;
 
+import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 
@@ -38,7 +37,7 @@ public class TestRatioWeightenedCountEvaluation {
 	@Test
 	public void test(){
 		try{
-			double value = eval.evaluate(m, Player.WHITE);
+			eval.evaluate(m, Player.WHITE);
 			fail("hata gelmedi");
 		}catch (ArithmeticException e) {
 			//...

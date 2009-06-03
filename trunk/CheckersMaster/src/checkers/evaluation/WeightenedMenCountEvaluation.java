@@ -1,7 +1,7 @@
 package checkers.evaluation;
 
+import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.sandbox.Model;
 import checkers.sandbox.SquareState;
 
 public class WeightenedMenCountEvaluation implements IEvaluation{

@@ -37,6 +37,7 @@ public class GreedyAlgorithm {
 			model.tryMove(currentMove);
 			double currentValue = evaluationFunction.evaluate(model, whosTurn);
 			model.undoTryMove(currentMove);
+			currentMove.setValue((int) currentValue);
 			
 			if(selectedMove == null){
 				maxValue = currentValue;

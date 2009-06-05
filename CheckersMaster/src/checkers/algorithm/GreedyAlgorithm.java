@@ -1,9 +1,13 @@
 package checkers.algorithm;
 
+import java.util.List;
+
 import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
+import checkers.evaluation.IEvaluation;
+import checkers.rules.ISuccessor;
 
 /**
  * Greedy Algoritmasý uygulamasý
@@ -22,6 +26,27 @@ public class GreedyAlgorithm {
 	 * @return
 	 */
 	public Move algorithm(CalculationContext context, Model model, Player whosTurn) {
-		return null;
+		IEvaluation evaluationFunction = context.getEvaluationFunction();
+		
+		ISuccessor successorFunction = context.getSuccessorFunction();
+		List<Move> successors = successorFunction.getSuccessors(model, whosTurn);
+		double maxValue=0;
+		Move selectedMove = null;
+		for (int i = 0; i < successors.size(); i++) {
+			Move currentMove = successors.get(i);
+			model.tryMove(currentMove);
+			double currentValue = evaluationFunction.evaluate(model, whosTurn);
+			model.undoTryMove(currentMove);
+			
+			if(selectedMove == null){
+				maxValue = currentValue;
+				selectedMove = currentMove;
+			}
+			if (maxValue<currentValue){
+				maxValue=currentValue;
+				selectedMove = currentMove;
+			}	
+		}
+		return selectedMove;
 	}
 }

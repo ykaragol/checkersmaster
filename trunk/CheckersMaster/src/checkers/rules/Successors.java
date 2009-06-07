@@ -363,7 +363,7 @@ public class Successors  implements ISuccessor{
 	
 	//ileriye gidebilir mi?
 	private boolean buttomCheck(SquareState[][] state, int i) {
-		return i+1 >= state.length;
+		return i-1 < 0;
 	}
 }
 

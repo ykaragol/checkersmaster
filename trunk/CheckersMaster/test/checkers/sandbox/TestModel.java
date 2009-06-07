@@ -13,7 +13,7 @@ public class TestModel {
 	 * Tablonun dizilimini test eder.
 	 * ilk index yukarýdan aþaðý, ikinci index saðdan sola
 	 */
-	@Test
+	//@Test
 	public void test(){
 		Model m = new Model();
 		m.baslat();

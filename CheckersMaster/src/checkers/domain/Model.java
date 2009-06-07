@@ -20,15 +20,14 @@ public class Model {
 
 	public void baslat(){
 		SquareState ilk[][] = {
-				{SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE},
 				{SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK},
 				{SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE},
+				{SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK,SquareState.WHITE,SquareState.BLANK},
 				{SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK},
 				{SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK,SquareState.BLANK},
-				{SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK},
 				{SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK},
 				{SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK},
-				
+				{SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK},
 		};
 		state = ilk;
 		context = new CalculationContext();
@@ -50,20 +49,20 @@ public class Model {
 	}
 	
 	public void tryMove(Move move) {
-		state[move.toY][move.toX]=state[move.fromY][move.fromX];
-		state[move.fromY][move.fromX] = SquareState.BLANK;
+		state[move.toX][move.toY]=state[move.fromX][move.fromY];
+		state[move.fromX][move.fromY] = SquareState.BLANK;
 		if(move.must){
-			move.eat = state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2];
-			state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2] = SquareState.BLANK;
+			move.eat = state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2];
+			state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2] = SquareState.BLANK;
 		}
 	}
 
 	public void doMove(Move move) {
-		state[move.toY][move.toX]=state[move.fromY][move.fromX];
-		state[move.fromY][move.fromX] = SquareState.BLANK;
-		if(move.must){
-			move.eat = state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2];
-			state[(move.toY+move.fromY)/2][(move.toX+move.fromX)/2] = SquareState.BLANK;
+		state[move.toX][move.toY]=state[move.fromX][move.fromY];
+		state[move.fromX][move.fromY] = SquareState.BLANK;
+		if(Math.abs(move.toX-move.toY)>1){
+			move.eat = state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2];
+			state[(move.toX+move.fromX)/2][(move.toY+move.fromY)/2] = SquareState.BLANK;
 		}
 		callBack.updateUI();
 		Move minimax = algorithm.minimax(context, this, Player.BLACK);

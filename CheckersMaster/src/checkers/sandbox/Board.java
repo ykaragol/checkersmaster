@@ -73,14 +73,14 @@ public class Board extends JPanel {
 		
 		SquareState [][] matrix = model.state;
 		
-		for (int i = 0; i < matrix.length; i++) {
+		for (int i = matrix.length-1; i >=0; i--) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if(matrix[j][i] == SquareState.WHITE){
+				if(matrix[i][j] == SquareState.WHITE){
 					double p = getHeight() / 8;
-					g.drawImage(white, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
-				}else if(matrix[j][i] == SquareState.BLACK){
+					g.drawImage(white, (int)(p*j+p*0.15), (int)(p*(7-i)+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
+				}else if(matrix[i][j] == SquareState.BLACK){
 					double p = getHeight() / 8;
-					g.drawImage(black, (int)(p*i+p*0.15), (int)(p*j+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
+					g.drawImage(black, (int)(p*j+p*0.15), (int)(p*(7-i)+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
 				}
 			}
 		}
@@ -129,10 +129,10 @@ public class Board extends JPanel {
 			
 			//System.err.println("Su noktada birakildi:"+ x + " - " + y);
 			Move move  = new Move();
-			move.fromX = _x-1;
-			move.fromY = 8-_y;
-			move.toX = x-1;
-			move.toY = 8-y;
+			move.fromX = _y-1;
+			move.fromY = _x-1;
+			move.toX = y-1;
+			move.toY = x-1;
 			model.doMove(move);
 		}
 		

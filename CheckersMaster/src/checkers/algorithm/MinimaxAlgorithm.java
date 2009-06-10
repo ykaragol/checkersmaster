@@ -9,9 +9,10 @@ import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
-public class MinimaxAlgorithm {
+public class MinimaxAlgorithm implements IAlgorithm{
 
-	public Move minimax(CalculationContext context, Model model, Player whosTurn) {
+	@Override
+	public Move algorithm(CalculationContext context, Model model, Player whosTurn) {
 		if(context == null || model == null) {
 			throw new IllegalArgumentException();
 		}
@@ -65,7 +66,7 @@ public class MinimaxAlgorithm {
 	private int evaluateModel(CalculationContext context, Model model) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
 		return (int) evaluationFunction.evaluate(model,context.getPlayer());
-		// TODO:geri dönecek olan sayý tipi int deðil double olacak.
+		// TODO:geri dï¿½necek olan sayï¿½ tipi int deï¿½il double olacak.
 	}
 	
 	private List<Move> getSuccessors(CalculationContext context, Model model, Player whosTurn) {

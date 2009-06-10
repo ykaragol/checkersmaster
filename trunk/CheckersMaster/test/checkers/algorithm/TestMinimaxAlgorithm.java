@@ -40,8 +40,8 @@ public class TestMinimaxAlgorithm {
 	@Test
 	public void testAlgorithm(){
 		try{
-			algorithm.minimax(context, null, Player.WHITE);
-			fail("Hata üretmeliydi...");
+			algorithm.algorithm(context, null, Player.WHITE);
+			fail("Hata ï¿½retmeliydi...");
 		}catch(IllegalArgumentException exc){
 			
 		}catch (Throwable e) {
@@ -54,7 +54,7 @@ public class TestMinimaxAlgorithm {
 		context.setDepth(0);
 		context.setEvaluationFunction(evaluation);
 		model.baslat();
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 	}
 
@@ -66,7 +66,7 @@ public class TestMinimaxAlgorithm {
 		mock.retVal = 23;
 		context.setEvaluationFunction(mock);
 		model.baslat();
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 		assertEquals(23, minimax.getValue());
 		
@@ -86,7 +86,7 @@ public class TestMinimaxAlgorithm {
 		smock.value = 45;
 		context.setSuccessorFunction(smock);
 		model.baslat();
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 		assertEquals(23, minimax.getValue());
 		
@@ -105,7 +105,7 @@ public class TestMinimaxAlgorithm {
 		smock.value = 45;
 		context.setSuccessorFunction(smock);
 		model.baslat();
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 		assertEquals(23, minimax.getValue());
 		
@@ -124,7 +124,7 @@ public class TestMinimaxAlgorithm {
 		smock.value = 45;
 		context.setSuccessorFunction(smock);
 		model.baslat();
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 		assertEquals(23, minimax.getValue());
 		
@@ -144,7 +144,7 @@ public class TestMinimaxAlgorithm {
 		model.state[5][0] = SquareState.BLACK;
 		model.state[3][0] = SquareState.WHITE;
 		model.state[4][3] = SquareState.WHITE;
-		Move minimax = algorithm.minimax(context, model, Player.WHITE);
+		Move minimax = algorithm.algorithm(context, model, Player.WHITE);
 		assertNotNull(minimax);
 		//assertEquals(23, minimax.getValue());
 		assertEquals(3,minimax.fromY);

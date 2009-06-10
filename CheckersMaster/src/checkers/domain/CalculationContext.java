@@ -1,19 +1,21 @@
 package checkers.domain;
 
+import checkers.algorithm.IAlgorithm;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
 /**
- * Tüm algoritmalar için yapýlandýrma parametreleri içerir.
+ * Tï¿½m algoritmalar iï¿½in yapï¿½landï¿½rma parametreleri iï¿½erir.
  * @author hacer_catal
  *
  */
 public class CalculationContext{
 
 	private int depth;
-	private Player player;//player'ýn context'te olmasý doðru olmayabilir...
+	private Player player;//player'ï¿½n context'te olmasï¿½ doï¿½ru olmayabilir...
 	private IEvaluation evaluationFunction;
 	private ISuccessor successorFunction;
+	private IAlgorithm algorithm;
 
 
 	public void setDepth(int depth) {
@@ -46,6 +48,14 @@ public class CalculationContext{
 
 	public ISuccessor getSuccessorFunction() {
 		return successorFunction;
+	}
+
+	public void setAlgorithm(IAlgorithm algorithm) {
+		this.algorithm = algorithm;
+	}
+
+	public IAlgorithm getAlgorithm() {
+		return algorithm;
 	}
 
 }

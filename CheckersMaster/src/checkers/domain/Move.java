@@ -11,6 +11,7 @@ public class Move {
 	public boolean must = false;
 	public SquareState eat;
 	public Move next;
+	public boolean convert;
 
 	public int getValue() {
 		return value;

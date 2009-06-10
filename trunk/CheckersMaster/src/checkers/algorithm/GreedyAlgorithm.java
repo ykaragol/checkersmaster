@@ -10,21 +10,22 @@ import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
 /**
- * Greedy Algoritması uygulaması
+ * Greedy AlgoritmasÄ± uygulamasÄ±
  * 
  * @author ozge
  *
  */
-public class GreedyAlgorithm {
+public class GreedyAlgorithm implements IAlgorithm{
 	
 	/**
-	 * Greedy algoritmasını kullanarak belirli bir durumda bir sonraki hamleye karar verir.
+	 * Greedy algoritmasÄ±nÄ± kullanarak belirli bir durumda bir sonraki hamleye karar verir.
 	 * 
-	 * @param context durum bilgilerini taşır.
-	 * @param model	tahtanın şu anki durumunu belirtir.
-	 * @param whosTurn sıranın kimde olduğunu belirtir.
+	 * @param context durum bilgilerini taÅŸÄ±r
+	 * @param model	tahtanÄ±n ÅŸu anki durumunu belirtir.
+	 * @param whosTurn sÄ±ranÄ±n kimde olduÄŸunu belirtir.
 	 * @return
 	 */
+	@Override
 	public Move algorithm(CalculationContext context, Model model, Player whosTurn) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
 		

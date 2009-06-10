@@ -2,6 +2,11 @@ package checkers.sandbox;
 
 import checkers.domain.Player;
 
+/**
+ * 
+ * @author yusuf
+ *
+ */
 public enum SquareState{
 	BLANK (null),
 	WHITE (Player.WHITE),
@@ -13,6 +18,18 @@ public enum SquareState{
 	
 	private SquareState(Player owner){
 		this.owner = owner;
+	}
+
+	public SquareState convertKing() {
+		if(this==WHITE || this==BLACK)
+			return values()[this.ordinal()+2];
+		return this;
+	}
+
+	public SquareState convertNormal() {
+		if(this==KING_WHITE || this==KING_BLACK)
+			return values()[this.ordinal()-2];
+		return this;
 	}
 }
 	// 0 means blank

@@ -29,7 +29,7 @@ import checkers.domain.Move;
 */
 
 /**
- * Checkers için oyun tahtasýný oluþturan kod.
+ * Checkers iï¿½in oyun tahtasï¿½nï¿½ oluï¿½turan kod.
  * 
  * 
  * @author ykaragol
@@ -37,10 +37,13 @@ import checkers.domain.Move;
 @SuppressWarnings("serial")
 public class Board extends JPanel {
 
-	private Model model = new Model();
 	private Image board = null;
 	private Image white = null;
 	private Image black = null;
+	private Image kingWhite = null;
+	private Image kingBlack = null;
+	
+	private Model model;
 
 	public Image getBoard() {
 		return board;
@@ -62,8 +65,11 @@ public class Board extends JPanel {
 		f = new File("./img/black.gif");
 		black = ImageIO.read(f);
 		
-		model.setCallback(this);
-		model.baslat();
+		f = new File("./img/kingWhite.gif");
+		kingWhite = ImageIO.read(f);
+		
+		f = new File("./img/kingBlack.gif");
+		kingBlack = ImageIO.read(f);
 	}
 
 	@Override
@@ -75,12 +81,24 @@ public class Board extends JPanel {
 		
 		for (int i = matrix.length-1; i >=0; i--) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if(matrix[i][j] == SquareState.WHITE){
+				Image img = null;
+				switch(matrix[i][j]){
+					case BLACK:
+						img = black;
+						break;
+					case WHITE:
+						img = white;
+						break;
+					case KING_BLACK:
+						img = kingBlack;
+						break;
+					case KING_WHITE:
+						img = kingWhite;
+						break;
+				}
+				if(img != null){
 					double p = getHeight() / 8;
-					g.drawImage(white, (int)(p*j+p*0.15), (int)(p*(7-i)+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
-				}else if(matrix[i][j] == SquareState.BLACK){
-					double p = getHeight() / 8;
-					g.drawImage(black, (int)(p*j+p*0.15), (int)(p*(7-i)+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
+					g.drawImage(img, (int)(p*j+p*0.15), (int)(p*(7-i)+p*0.15), (int)(p*0.7), (int)(p*0.7), null);
 				}
 			}
 		}
@@ -154,13 +172,15 @@ public class Board extends JPanel {
 		
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static Board init(Model model) throws IOException {
 		Board b = new Board();
+		b.model = model;
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(2, 2, 610, 636);
 		frame.add(b);
 		frame.setResizable(false);
 		frame.setVisible(true);
+		return b;
 	}
 }

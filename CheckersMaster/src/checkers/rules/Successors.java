@@ -13,8 +13,8 @@ public class Successors  implements ISuccessor{
 	@Override
 	public List<Move> getSuccessors(Model model, Player player) {
 		LinkedList<Move> list = new LinkedList<Move>();
-		//bir karedekini beyaz taþ kabul edip, çaprazlarýný kontrol edip hamle yaptýracaðýz. 
-		// i alt satýr, j yan sütun
+		//bir karedekini beyaz taï¿½ kabul edip, ï¿½aprazlarï¿½nï¿½ kontrol edip hamle yaptï¿½racaï¿½ï¿½z. 
+		// i alt satï¿½r, j yan sï¿½tun
 		SquareState[][] state = model.state;
 		for (int i=0; i<state.length; i++){
 			for (int j=0; j<state[i].length; j++){
@@ -64,7 +64,7 @@ public class Successors  implements ISuccessor{
 	}
 
 	private void handleWhiteStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
-		//basit bir taþ sadece ileriye gidebilir...
+		//basit bir taï¿½ sadece ileriye gidebilir...
 		if(forwardCheck(state, i)){
 			throw new IllegalStateException();
 		}
@@ -125,108 +125,111 @@ public class Successors  implements ISuccessor{
 
 	private void handleWhiteKingStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
 		SquareState currentSquare = state[i][j];
-		SquareState rightForward = rightForward(state,i,j);
-		if(rightForward != null){
-			if(rightForward.owner == null){
-				//gidebilir:
-				Move move = new Move();
-				move.fromX=i;
-				move.fromY=j;
-				move.toX = i+1;
-				move.toY = j+1;
-				list.add(move);
-			}else if(rightForward.owner == currentSquare.owner){
-				//gidemez
-			}else {
-				//yerse gidebilir...
-				SquareState twoRightForward = twoRightForward(state,i,j);
-				if(twoRightForward == SquareState.BLANK){
+		if(!forwardCheck(state, i)){
+			SquareState rightForward = rightForward(state,i,j);
+			if(rightForward != null){
+				if(rightForward.owner == null){
+					//gidebilir:
 					Move move = new Move();
 					move.fromX=i;
 					move.fromY=j;
-					move.toX = i+2;
-					move.toY = j+2;
+					move.toX = i+1;
+					move.toY = j+1;
 					list.add(move);
-					move.must = true;
+				}else if(rightForward.owner == currentSquare.owner){
+					//gidemez
+				}else {
+					//yerse gidebilir...
+					SquareState twoRightForward = twoRightForward(state,i,j);
+					if(twoRightForward == SquareState.BLANK){
+						Move move = new Move();
+						move.fromX=i;
+						move.fromY=j;
+						move.toX = i+2;
+						move.toY = j+2;
+						list.add(move);
+						move.must = true;
+					}
+				}
+			}
+			SquareState leftForward = leftForward(state,i,j);
+			if(leftForward != null){
+				if(leftForward.owner == null){
+					//gidebilir:
+					Move move = new Move();
+					move.fromX=i;
+					move.fromY=j;
+					move.toX = i+1;
+					move.toY = j-1;
+					list.add(move);
+				}else if(leftForward.owner == currentSquare.owner){
+					//gidemez
+				}else {
+					//yerse gidebilir...
+					SquareState twoLeftForward = twoLeftForward(state,i,j);
+					if(twoLeftForward == SquareState.BLANK){
+						Move move = new Move();
+						move.fromX=i;
+						move.fromY=j;
+						move.toX = i+2;
+						move.toY = j-2;
+						list.add(move);
+						move.must = true;
+					}
 				}
 			}
 		}
-		SquareState leftForward = leftForward(state,i,j);
-		if(leftForward != null){
-			if(leftForward.owner == null){
-				//gidebilir:
-				Move move = new Move();
-				move.fromX=i;
-				move.fromY=j;
-				move.toX = i+1;
-				move.toY = j-1;
-				list.add(move);
-			}else if(leftForward.owner == currentSquare.owner){
-				//gidemez
-			}else {
-				//yerse gidebilir...
-				SquareState twoLeftForward = twoLeftForward(state,i,j);
-				if(twoLeftForward == SquareState.BLANK){
+		if(!buttomCheck(state, i)){
+			SquareState rightButtom = rightButtom(state,i,j);
+			if(rightButtom != null){
+				if(rightButtom.owner == null){
+					//gidebilir:
 					Move move = new Move();
 					move.fromX=i;
 					move.fromY=j;
-					move.toX = i+2;
-					move.toY = j-2;
+					move.toX = i-1;
+					move.toY = j+1;
 					list.add(move);
-					move.must = true;
+				}else if(rightButtom.owner == currentSquare.owner){
+					//gidemez
+				}else {
+					//yerse gidebilir...
+					SquareState twoRightButtom = twoRightButtom(state,i,j);
+					if(twoRightButtom == SquareState.BLANK){
+						Move move = new Move();
+						move.fromX=i;
+						move.fromY=j;
+						move.toX = i-2;
+						move.toY = j+2;
+						list.add(move);
+						move.must = true;
+					}
 				}
 			}
-		}
-		
-		SquareState rightButtom = rightButtom(state,i,j);
-		if(rightButtom != null){
-			if(rightButtom.owner == null){
-				//gidebilir:
-				Move move = new Move();
-				move.fromX=i;
-				move.fromY=j;
-				move.toX = i-1;
-				move.toY = j+1;
-				list.add(move);
-			}else if(rightButtom.owner == currentSquare.owner){
-				//gidemez
-			}else {
-				//yerse gidebilir...
-				SquareState twoRightButtom = twoRightButtom(state,i,j);
-				if(twoRightButtom == SquareState.BLANK){
+			SquareState leftButtom = leftButtom(state,i,j);
+			if(leftButtom != null){
+				if(leftButtom.owner == null){
+					//gidebilir:
 					Move move = new Move();
 					move.fromX=i;
 					move.fromY=j;
-					move.toX = i-2;
-					move.toY = j+2;
+					move.toX = i-1;
+					move.toY = j-1;
 					list.add(move);
-					move.must = true;
-				}
-			}
-		}
-		SquareState leftButtom = leftButtom(state,i,j);
-		if(leftButtom != null){
-			if(leftButtom.owner == null){
-				//gidebilir:
-				Move move = new Move();
-				move.fromX=i;
-				move.fromY=j;
-				move.toX = i-1;
-				move.toY = j-1;
-				list.add(move);
-			}else if(leftButtom.owner == currentSquare.owner){
-				//gidemez
-			}else {
-				//yerse gidebilir...
-				SquareState twoLeftButtom = twoLeftButtom(state,i,j);
-				if(twoLeftButtom == SquareState.BLANK){
-					Move move = new Move();
-					move.fromX=i;
-					move.fromY=j;
-					move.toX = i-2;
-					move.toY = j-2;
-					list.add(move);
-					move.must = true;
+				}else if(leftButtom.owner == currentSquare.owner){
+					//gidemez
+				}else {
+					//yerse gidebilir...
+					SquareState twoLeftButtom = twoLeftButtom(state,i,j);
+					if(twoLeftButtom == SquareState.BLANK){
+						Move move = new Move();
+						move.fromX=i;
+						move.fromY=j;
+						move.toX = i-2;
+						move.toY = j-2;
+						list.add(move);
+						move.must = true;
+					}
 				}
 			}
 		}
@@ -234,7 +237,7 @@ public class Successors  implements ISuccessor{
 	
 
 	private void handleBlackStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {
-		//basit bir taþ sadece ileriye gidebilir...
+		//basit bir taï¿½ sadece ileriye gidebilir...
 		if(buttomCheck(state, i)){
 			throw new IllegalStateException();
 		}
@@ -293,7 +296,7 @@ public class Successors  implements ISuccessor{
 		}
 	}
 	
-	//iki sol altýn deðerini getirir
+	//iki sol altï¿½n deï¿½erini getirir
 	private SquareState twoLeftButtom(SquareState[][] state, int i, int j) {
 		if(i-2>=0 &&  j-2 >= 0){
 			return state[i-2][j-2];
@@ -301,7 +304,7 @@ public class Successors  implements ISuccessor{
 		return null;
 	}
 
-	//sol altýn deðerini getirir
+	//sol altï¿½n deï¿½erini getirir
 	private SquareState leftButtom(SquareState[][] state, int i, int j) {
 		if(i-1>=0 &&  j-1 >= 0){
 			return state[i-1][j-1];
@@ -309,7 +312,7 @@ public class Successors  implements ISuccessor{
 		return null;
 	}
 
-	//iki sað altýn deðerini getirir
+	//iki saï¿½ altï¿½n deï¿½erini getirir
 	private SquareState twoRightButtom(SquareState[][] state, int i, int j) {
 		if( i-2 > 0 && j+2 < state[i].length){
 			return state[i-2][j+2];
@@ -317,7 +320,7 @@ public class Successors  implements ISuccessor{
 		return null;
 	}
 
-	//sað altýn deðerini getirir
+	//saï¿½ altï¿½n deï¿½erini getirir
 	private SquareState rightButtom(SquareState[][] state, int i, int j) {
 		if(i-1>=0 &&  j+1 < state[i].length){
 			return state[i-1][j+1];
@@ -340,7 +343,7 @@ public class Successors  implements ISuccessor{
 	}
 
 
-	//sol önünü deðerini getirir..
+	//sol ï¿½nï¿½nï¿½ deï¿½erini getirir..
 	private SquareState leftForward(SquareState[][] state, int i, int j) {
 		if(j-1 >= 0){
 			return state[i+1][j-1];
@@ -348,7 +351,7 @@ public class Successors  implements ISuccessor{
 		return null;
 	}
 	
-	//sað önün deðerini getirir..
+	//saï¿½ ï¿½nï¿½n deï¿½erini getirir..
 	private SquareState rightForward(SquareState[][] state, int i, int j) {
 		if(j+1 < state[i].length){
 			return state[i+1][j+1];
@@ -368,32 +371,32 @@ public class Successors  implements ISuccessor{
 }
 
 //
-////bir karedekini beyaz taþ kabul edip, çaprazlarýný kontrol edip hamle yaptýracaðýz. 
-//// i alt satýr, j yan sütun
+////bir karedekini beyaz taï¿½ kabul edip, ï¿½aprazlarï¿½nï¿½ kontrol edip hamle yaptï¿½racaï¿½ï¿½z. 
+//// i alt satï¿½r, j yan sï¿½tun
 //for (int i=1;i<=8;i++){
 //	for (int j=1;j<=8;j++){
-//		//eðer bulunduðun yerde bir beyaz varsa
+//		//eï¿½er bulunduï¿½un yerde bir beyaz varsa
 //		if (m[i][j]==1) 
 //		{
-//			//eðer sað çaprazý da beyazsa deðiþiklik yapma
+//			//eï¿½er saï¿½ ï¿½aprazï¿½ da beyazsa deï¿½iï¿½iklik yapma
 //			if (m[i+1][j+1]==1 && (i+1)<=8 && (j+1)<=8)
 //			{
 //				m[i][j]=1;
 //			}
-//			// eðer sað çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ siyahsa ve siyahï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri beyaz yap(1 yap)
 //			else if (m[i+1][j+1]==2 && m[i+2][j+2]==0 && (i+2)<=8 && (j+2)<=8)
 //			{
 //				m[i][j]=0;
 //				m[i+1][j+1]=0;
 //				m[i+2][j+2]=1;
 //			}
-//			// eðer sað çaprazý king beyazsa deðiþiklik yapma
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ king beyazsa deï¿½iï¿½iklik yapma
 //
 //			else if (m[i+1][j+1]==3 && (i+1)<=8 && (j+1)<=8)
 //			{
 //				m[i][j]=1;
 //			}
-//			// eðer sað çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ king siyahsa ve siyahï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri beyaz yap(1 yap)
 //
 //			else if(m[i+1][j+1]==4 && m[i+2][j+2]==0 && (i+2)<=8 && (j+2)<=8)
 //			{
@@ -401,24 +404,24 @@ public class Successors  implements ISuccessor{
 //				m[i+1][j+1]=0;
 //				m[i+2][j+2]=1;
 //			}
-//			//eðer sol çaprazý beyazsa deðiþiklik yapma
+//			//eï¿½er sol ï¿½aprazï¿½ beyazsa deï¿½iï¿½iklik yapma
 //			else if (m[i-1][j+1]==1 && (j+1)<=8 && 1<=(i-1))
 //			{
 //				m[i][j]=1;
 //			}
-//			// eðer sol çaprazý siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+//			// eï¿½er sol ï¿½aprazï¿½ siyahsa ve siyahï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri beyaz yap(1 yap)
 //			else if (m[i-1][j+1]==2 && m[i-2][j+2]==0 && (j+2)<=8 && 1<=(i-2))
 //			{
 //				m[i][j]=0;
 //				m[i-1][j+1]=0;
 //				m[i-2][j+2]=1;
 //			}
-//			//eðer sol çaprazý da king beyazsa deðiþiklik yapma
+//			//eï¿½er sol ï¿½aprazï¿½ da king beyazsa deï¿½iï¿½iklik yapma
 //			else if (m[i-1][j+1]==3 && (j+1)<=8 && 1<=(i-1))
 //			{
 //				m[i][j]=1;
 //			}
-//			// eðer sol çaprazý king siyahsa ve siyahýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri beyaz yap(1 yap)
+//			// eï¿½er sol ï¿½aprazï¿½ king siyahsa ve siyahï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri beyaz yap(1 yap)
 //
 //			else if (m[i-1][j+1]==4 && m[i-2][j+2]==0 && (j+2)<=8 && 1<=(i-2))
 //			{
@@ -431,7 +434,7 @@ public class Successors  implements ISuccessor{
 //		
 //	}
 //}
-////eðer beyazlar 8. satýra ulaþmýþsa king beyaz olurlar
+////eï¿½er beyazlar 8. satï¿½ra ulaï¿½mï¿½ï¿½sa king beyaz olurlar
 //for (i=1;i<=8;i++){
 //	if m[i][8]=1;{
 //		m[i][8]=3;
@@ -439,46 +442,46 @@ public class Successors  implements ISuccessor{
 //}
 //}
 //
-//// siyahlar farklý olarak matrisin son elemanlarýndan itibaren hareket etmeye baþlayacaklar
+//// siyahlar farklï¿½ olarak matrisin son elemanlarï¿½ndan itibaren hareket etmeye baï¿½layacaklar
 //for (int i=1;i<=8;i++){
 //	for (int j=8;1<=j;j--){
-//		// eðer bulunduðun karede siyah varsa
+//		// eï¿½er bulunduï¿½un karede siyah varsa
 //		if m[i][j]==2{
-//			//eðer sað çaprazý da siyahsa deðiþiklik yapma
+//			//eï¿½er saï¿½ ï¿½aprazï¿½ da siyahsa deï¿½iï¿½iklik yapma
 //			if (m[i-1][j-1]==2 && 1<=(j-1)&& 1<=(i-1)){ 
 //				m[i][j]=2;
 //			}
-//			// eðer sað çaprazý beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ beyazsa ve beyazï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri siyah yap(2 yap)
 //			else if (m[i-1][j-1]==1 && m[i-2][j-2]==0&& 1<=(j-2) && 1<=(i-2)){
 //			m[i-2][j-2]=2;
 //			m[i-1][j-1]=0;
 //			m[i][j]=0;
 //			}
-//			// eðer sað çaprazý king siyahsa deðiþiklik yapma
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ king siyahsa deï¿½iï¿½iklik yapma
 //			else if (m[i-1][j-1]==4 && 1<=(j-1)&& 1<=(i-1)){
 //				m[i][j]=2;
 //			}
-//			// eðer sað çaprazý king beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+//			// eï¿½er saï¿½ ï¿½aprazï¿½ king beyazsa ve beyazï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri siyah yap(2 yap)
 //			else if (m[i-1][j-1]==3 && m[i-2][j-2]==0 && 1<=(j-2)&& 1<=(i-2)){
 //				m[i-2][j-2]=2;
 //				m[i-1][j-1]=0;
 //				m[i][j]=0;
 //			}
-//			//eðer sol çaprazý da siyahsa deðiþiklik yapma
+//			//eï¿½er sol ï¿½aprazï¿½ da siyahsa deï¿½iï¿½iklik yapma
 //			else if (m[i+1][j-1]==2 && 1<=(j-1)&& (i+1)<=8){
 //				m[i][j]=2;
 //			}
-//			// eðer sol çaprazý beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+//			// eï¿½er sol ï¿½aprazï¿½ beyazsa ve beyazï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri siyah yap(2 yap)
 //			else if (m[i+1][j-1]==1 && m[i+2][j-2]==0 && 1<=(j-2)&& (i+2)<=8){
 //				m[i+2][j-2]=2;
 //				m[i+1][j-1]=0;
 //				m[i][j]=0;
 //			}
-//			//eðer sol çaprazý da king siyahsa deðiþiklik yapma
+//			//eï¿½er sol ï¿½aprazï¿½ da king siyahsa deï¿½iï¿½iklik yapma
 //			else if (m[i+1][j-1]==4 & 1<=(j-1)&& (i+1)<=8){
 //				m[i][j]=2;
 //			}
-//			// eðer sol çaprazý king beyazsa ve beyazýn arkasý boþluksa üstünden atlat ve önceden bulunduðu yeri sýfýrlayýp(blank yap) yeni yeri siyah yap(2 yap)
+//			// eï¿½er sol ï¿½aprazï¿½ king beyazsa ve beyazï¿½n arkasï¿½ boï¿½luksa ï¿½stï¿½nden atlat ve ï¿½nceden bulunduï¿½u yeri sï¿½fï¿½rlayï¿½p(blank yap) yeni yeri siyah yap(2 yap)
 //			else if (m[i+1][j-1]==3 && m[i+2][j-2]==0 && 1<=(j-2)&& (i+2)<=8){
 //				m[i+1][j-1]=0;
 //				m[i+2][j-2]=2;
@@ -486,7 +489,7 @@ public class Successors  implements ISuccessor{
 //		}
 //	}
 //}
-//	//eðer siyahlarlar 1. satýra ulaþmýþsa king siyah olurlar
+//	//eï¿½er siyahlarlar 1. satï¿½ra ulaï¿½mï¿½ï¿½sa king siyah olurlar
 //   for (i=8;1<=i;i--){
 //		if m[i][1]=2;{ 
 //			m[i][1]=4;

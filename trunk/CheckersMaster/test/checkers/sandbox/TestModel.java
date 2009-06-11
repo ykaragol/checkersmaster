@@ -1,9 +1,6 @@
 package checkers.sandbox;
 
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import checkers.domain.Model;
 
 
@@ -11,7 +8,7 @@ public class TestModel {
 	
 	/**
 	 * Tablonun dizilimini test eder.
-	 * ilk index yukarıdan aşağı, ikinci index sağdan sola
+	 * ilk index yukarÄ±dan aÅŸaÄŸÄ±, ikinci index saÄŸdan sola
 	 */
 	//@Test
 	public void test(){

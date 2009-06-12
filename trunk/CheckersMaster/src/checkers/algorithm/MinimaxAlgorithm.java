@@ -28,7 +28,8 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		List<Move> successors = getSuccessors(context, model, whosTurn);
 		if(successors.isEmpty()){
 			Move move = new Move();
-			move.setValue(evaluateModel(context, model));
+			int value = context.getPlayer() == whosTurn ? Integer.MIN_VALUE : Integer.MAX_VALUE; 
+			move.setValue(value);
 			return move;
 		}
 		boolean isAssigned = false;
@@ -73,6 +74,11 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		ISuccessor successor = context.getSuccessorFunction();
 		List<Move> successors = successor.getSuccessors(model, whosTurn);
 		return successors;
+	}
+
+	@Override
+	public String getName() {
+		return "Min-Max Algorithm";
 	}
 
 }

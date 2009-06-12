@@ -34,12 +34,14 @@ public class Engine implements ModelListener{
 		this.player = player;
 	}
 
-	public void playTurn(Model model) {
+	public int playTurn(Model model) {
 		//eğer ben güncellemediysem, rakip güncellemiştir ve sıra bende demektir.
 		//çünkü toplamda iki oyuncu var.
 		IAlgorithm algorithm = calculationContext.getAlgorithm();
 		Move move = algorithm.algorithm(calculationContext, model, player);
-		model.doMove(move);
+		if(move.getValue()!=Integer.MIN_VALUE || move.getValue()!= Integer.MAX_VALUE)
+			model.doMove(move);
+		return move.getValue();
 	}
 	
 	@Override

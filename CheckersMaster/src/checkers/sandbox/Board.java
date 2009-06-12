@@ -183,4 +183,8 @@ public class Board extends JPanel {
 		frame.setVisible(true);
 		return b;
 	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
 }

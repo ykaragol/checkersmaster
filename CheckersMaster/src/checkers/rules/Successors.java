@@ -18,34 +18,57 @@ public class Successors  implements ISuccessor{
 		SquareState[][] state = model.state;
 		for (int i=0; i<state.length; i++){
 			for (int j=0; j<state[i].length; j++){
-				SquareState square = state[i][j];
-				switch (square) {
-				case BLACK:
-					if(player==Player.BLACK)
-						handleBlackStone(list, state, i, j);
-					break;
-				case KING_BLACK:
-					if(player==Player.BLACK)
-						handleWhiteKingStone(list, state, i, j);
-					break;
-				case WHITE:
-					if(player==Player.WHITE)
-						handleWhiteStone(list, state, i, j);
-					break;
-				case KING_WHITE:
-					if(player==Player.WHITE)
-						handleWhiteKingStone(list, state, i, j);
-					break;
-				default:
-					break;
-				}
+				canMoveThisStone(player, list, state, i, j);
 			}
 		}
-		handleList(list);
+		
+		handleMust(model, player, list);
+		
 		return list;
 	}
 
-	private void handleList(LinkedList<Move> list) {
+	private boolean handleMust(Model model, Player player, LinkedList<Move> list) {
+		boolean hasMust = handleList(list);
+		if(hasMust){
+			for (Move move : list) {
+				model.tryMove(move);
+				LinkedList<Move> newList = new LinkedList<Move>();
+				canMoveThisStone(player, newList, model.state, move.toX, move.toY);
+				if(handleMust(model, player, newList)){
+					move.move = newList.get(0);
+				}
+				model.undoTryMove(move);
+			}
+		}
+		return hasMust;
+	}
+
+	private void canMoveThisStone(Player player, LinkedList<Move> list,
+			SquareState[][] state, int i, int j) {
+		SquareState square = state[i][j];
+		switch (square) {
+		case BLACK:
+			if(player==Player.BLACK)
+				handleBlackStone(list, state, i, j);
+			break;
+		case KING_BLACK:
+			if(player==Player.BLACK)
+				handleWhiteKingStone(list, state, i, j);
+			break;
+		case WHITE:
+			if(player==Player.WHITE)
+				handleWhiteStone(list, state, i, j);
+			break;
+		case KING_WHITE:
+			if(player==Player.WHITE)
+				handleWhiteKingStone(list, state, i, j);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private boolean handleList(LinkedList<Move> list) {
 		boolean hasMust = false;
 		for (Move move : list) {
 			if(move.must){
@@ -61,6 +84,7 @@ public class Successors  implements ISuccessor{
 				}
 			}
 		}
+		return hasMust;
 	}
 
 	private void handleWhiteStone(LinkedList<Move> list, SquareState[][] state, int i, int j) {

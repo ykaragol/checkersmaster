@@ -7,4 +7,6 @@ import checkers.domain.Player;
 
 public interface IAlgorithm {
 	Move algorithm(CalculationContext context, Model model, Player whosTurn);
+	
+	String getName();
 }

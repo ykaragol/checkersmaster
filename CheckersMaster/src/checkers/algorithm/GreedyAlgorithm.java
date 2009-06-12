@@ -51,4 +51,9 @@ public class GreedyAlgorithm implements IAlgorithm{
 		}
 		return selectedMove;
 	}
+
+	@Override
+	public String getName() {
+		return "Greedy Algorithm";
+	}
 }

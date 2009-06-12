@@ -9,6 +9,7 @@ import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Player;
 import checkers.evaluation.MenCountEvaluation;
+import checkers.evaluation.WeightenedMenCountEvaluation;
 import checkers.rules.Successors;
 import checkers.sandbox.Board;
 
@@ -54,11 +55,23 @@ public class GameCenter {
 	}
 	
 	public void update(){
+		if(gameFinished)
+			return;
 		lock=!lock;
-		if(!lock)
-			blackPlayer.playTurn(model);
+		if(!lock){
+			int value = blackPlayer.playTurn(model);
+			if(value==Integer.MIN_VALUE){
+				gameFinished = true;
+				System.err.println("yenildim!");
+			}
+			if(value== Integer.MAX_VALUE){
+				gameFinished = true;
+				System.err.println("yendim");
+			}
+		}
 		b.updateUI();
 	}
+	private boolean gameFinished = false;
 	
 	public void run() throws IOException{
 		model = new Model();
@@ -69,7 +82,7 @@ public class GameCenter {
 		CalculationContext calculationContext = new CalculationContext();
 		calculationContext.setAlgorithm(new MinimaxAlgorithm());
 		calculationContext.setDepth(3);
-		calculationContext.setEvaluationFunction(new MenCountEvaluation());
+		calculationContext.setEvaluationFunction(new WeightenedMenCountEvaluation());
 		calculationContext.setPlayer(Player.BLACK);
 		calculationContext.setSuccessorFunction(new Successors());
 		blackPlayer.setCalculationContext(calculationContext);

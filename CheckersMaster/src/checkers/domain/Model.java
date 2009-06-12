@@ -81,6 +81,8 @@ public class Model {
 			if(move.toX == 0 )
 				state[move.toX][move.toY]=state[move.toX][move.toY].convertKing();
 		callBack.update();
+		if(move.move != null)
+			doMove(move.move);
 //		Move minimax = algorithm.algorithm(context, this, Player.BLACK);
 //		tryMove(minimax);
 //		callBack.updateUI();

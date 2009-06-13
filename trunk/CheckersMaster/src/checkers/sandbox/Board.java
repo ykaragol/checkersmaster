@@ -69,10 +69,10 @@ public class Board extends JPanel {
 		f = new File("./img/black.gif");
 		black = ImageIO.read(f);
 		
-		f = new File("./img/whiteKing.gif");
+		f = new File("./img/kingWhite.gif");
 		kingWhite = ImageIO.read(f);
 		
-		f = new File("./img/blackKing.gif");
+		f = new File("./img/kingBlack.gif");
 		kingBlack = ImageIO.read(f);
 	}
 

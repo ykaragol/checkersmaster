@@ -1,14 +1,11 @@
 package checkers.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 import checkers.algorithm.MinimaxAlgorithm;
 import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.evaluation.MenCountEvaluation;
 import checkers.evaluation.WeightenedMenCountEvaluation;
 import checkers.rules.Successors;
 import checkers.sandbox.Board;
@@ -26,14 +23,14 @@ public class GameCenter {
 	 */
 	private Model model;
 
-	/**
-	 * Tahtada yapılan değişiklikleri dinleyecek sınıflar
-	 */
-	private List<ModelListener> listeners = new LinkedList<ModelListener>();
+//	/**
+//	 * Tahtada yapılan değişiklikleri dinleyecek sınıflar
+//	 */
+//	private List<ModelListener> listeners = new LinkedList<ModelListener>();
 
 	private Engine blackPlayer;
 	
-	private Engine whitePlayer;
+	//private Engine whitePlayer;
 
 	private Board b;
 
@@ -81,7 +78,7 @@ public class GameCenter {
 		blackPlayer = new Engine(Player.BLACK);
 		CalculationContext calculationContext = new CalculationContext();
 		calculationContext.setAlgorithm(new MinimaxAlgorithm());
-		calculationContext.setDepth(3);
+		calculationContext.setDepth(6);
 		calculationContext.setEvaluationFunction(new WeightenedMenCountEvaluation());
 		calculationContext.setPlayer(Player.BLACK);
 		calculationContext.setSuccessorFunction(new Successors());

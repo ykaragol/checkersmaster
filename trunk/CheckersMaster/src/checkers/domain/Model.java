@@ -1,10 +1,6 @@
 package checkers.domain;
 
 import checkers.controller.GameCenter;
-import checkers.evaluation.IEvaluation;
-import checkers.evaluation.WeightenedMenCountEvaluation;
-import checkers.rules.Successors;
-import checkers.sandbox.Board;
 import checkers.sandbox.SquareState;
 
 /**
@@ -15,7 +11,6 @@ public class Model {
 	
 	public SquareState state[][];
 	private GameCenter callBack;
-	private CalculationContext context;
 
 	public void baslat(){
 		SquareState ilk[][] = {
@@ -29,12 +24,6 @@ public class Model {
 				{SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK,SquareState.BLANK,SquareState.BLACK},
 		};
 		state = ilk;
-		context = new CalculationContext();
-		IEvaluation evaluation = new WeightenedMenCountEvaluation();
-		context.setEvaluationFunction(evaluation);
-		context.setDepth(2);
-		context.setPlayer(Player.WHITE);
-		context.setSuccessorFunction(new Successors());
 	}
 
 	public void bos(){
@@ -80,12 +69,10 @@ public class Model {
 		if(move.toX<move.fromX)
 			if(move.toX == 0 )
 				state[move.toX][move.toY]=state[move.toX][move.toY].convertKing();
-		callBack.update();
-		if(move.move != null)
-			doMove(move.move);
-//		Move minimax = algorithm.algorithm(context, this, Player.BLACK);
-//		tryMove(minimax);
-//		callBack.updateUI();
+		if(move.nextMustMove != null)
+			doMove(move.nextMustMove);
+		else
+			callBack.update();
 	}
 	
 	
@@ -106,11 +93,4 @@ public class Model {
 	public void setCallback(GameCenter gameCenter){
 		this.callBack = gameCenter;
 	}
-	
-/*	
-	public void move(Move m){
-		state[m.toX][m.toY] = state[m.fromX][m.fromY];
-		state[m.fromX][m.fromY] = SquareState.BLANK;
-	}
-*/
 }

@@ -31,6 +31,10 @@ public enum SquareState{
 			return values()[this.ordinal()-2];
 		return this;
 	}
+	
+	public boolean isKing(){
+		return (this==KING_BLACK || this==KING_WHITE);
+	}
 }
 	// 0 means blank
 	// 1 means white

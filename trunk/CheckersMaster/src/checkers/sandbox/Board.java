@@ -7,6 +7,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -14,6 +16,8 @@ import javax.swing.JPanel;
 
 import checkers.domain.Model;
 import checkers.domain.Move;
+import checkers.domain.Player;
+import checkers.rules.Successors;
 
 
 /*
@@ -65,10 +69,10 @@ public class Board extends JPanel {
 		f = new File("./img/black.gif");
 		black = ImageIO.read(f);
 		
-		f = new File("./img/kingWhite.gif");
+		f = new File("./img/whiteKing.gif");
 		kingWhite = ImageIO.read(f);
 		
-		f = new File("./img/kingBlack.gif");
+		f = new File("./img/blackKing.gif");
 		kingBlack = ImageIO.read(f);
 	}
 
@@ -122,6 +126,7 @@ public class Board extends JPanel {
 		}
 		
 		private int _x,_y;
+		private LinkedList<Move> possibleMoves;
 
 		@Override
 		public void mousePressed(MouseEvent event) {
@@ -135,10 +140,17 @@ public class Board extends JPanel {
 			
 			_x=x;
 			_y=y;
+			
+			Successors successors = new Successors();
+			LinkedList<Move> moves = new LinkedList<Move>();
+			successors.handleStone(moves, model, _y-1, _x-1);
+			possibleMoves = moves;
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent event) {
+			if(possibleMoves.size()==0)
+				return;
 			double width = Board.this.getWidth();
 			double height = Board.this.getHeight();
 			
@@ -146,12 +158,23 @@ public class Board extends JPanel {
 			int y = (int)((height - event.getY()) / (height/ 8)) + 1;
 			
 			//System.err.println("Su noktada birakildi:"+ x + " - " + y);
-			Move move  = new Move();
-			move.fromX = _y-1;
-			move.fromY = _x-1;
-			move.toX = y-1;
-			move.toY = x-1;
-			model.doMove(move);
+			Move currentMove = null;
+			for (Move move : possibleMoves) {
+				if(move.toX == y-1 && move.toY == x-1){
+					currentMove = move;
+					break;
+				}
+			}
+//			Move move  = new Move();
+//			move.fromX = _y-1;
+//			move.fromY = _x-1;
+//			move.toX = y-1;
+//			move.toY = x-1;
+//			if(move.fromX == move.toX && move.fromY == move.toY)
+//				return;
+			if(currentMove==null)
+				return;
+			model.doMove(currentMove);
 		}
 		
 	}

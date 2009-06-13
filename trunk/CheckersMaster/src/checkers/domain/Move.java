@@ -12,7 +12,7 @@ public class Move {
 	public SquareState eat;
 	public Move next;
 	public boolean convert;
-	public Move move;
+	public Move nextMustMove;
 
 	public int getValue() {
 		return value;

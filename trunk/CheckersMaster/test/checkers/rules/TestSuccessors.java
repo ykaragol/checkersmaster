@@ -1,7 +1,10 @@
 package checkers.rules;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
@@ -10,6 +13,7 @@ import org.junit.Test;
 import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
+import checkers.sandbox.Board;
 import checkers.sandbox.SquareState;
 
 public class TestSuccessors {
@@ -325,6 +329,21 @@ public class TestSuccessors {
 		assertEquals(5, moves.get(0).toY);
 	}
 	
+	//boþ bir tahtada beyaz taþ ve saðdan yiyeceði siyah taþý test eder... 
+	//sonrasýnda king olacak...
+	@Test
+	public void testGetSuccessors601() {		
+		Model model = new Model();
+		model.bos();
+		model.state[5][4] = SquareState.WHITE;
+		model.state[6][3] = SquareState.BLACK;
+		List<Move> moves = successors.getSuccessors(model, Player.WHITE);
+		assertEquals(1, moves.size());
+		assertEquals(5, moves.get(0).fromX);
+		assertEquals(4, moves.get(0).fromY);
+		assertEquals(2, moves.get(0).toY);
+		assertEquals(7, moves.get(0).toX);
+	}
 	
 	//boþ bir tahtada beyaz kral taþý ve saðdan yiyeceði siyah taþý test eder...
 	@Test
@@ -369,6 +388,76 @@ public class TestSuccessors {
 		assertEquals(4, moves.get(0).fromY);
 		assertEquals(1, moves.get(0).toX);
 		assertEquals(2, moves.get(0).toY);
+	}
+	//boþ bir tahtada siyah taþý ve saðdan yiyeceði beyaz taþý test eder... sonrasýnda king olacak
+//	@Test
+//	public void testGetSuccessors64() {		
+//		Model model = new Model();
+//		model.bos();
+//		model.state[1][3] = SquareState.WHITE;
+//		model.state[2][4] = SquareState.BLACK;
+//		List<Move> moves = successors.getSuccessors(model, Player.BLACK);
+//		assertEquals(1, moves.size());
+//		assertEquals(2, moves.get(0).fromX);
+//		assertEquals(4, moves.get(0).fromY);
+//		assertEquals(0, moves.get(0).toX);
+//		assertEquals(2, moves.get(0).toY);
+//		assertTrue(moves.get(0).must);
+//		assertTrue(moves.get(0).convert);
+//	}
+	
+	//çoklu yeme durumu
+	@Test
+	public void testGetSuccessors71() {		
+		Model model = new Model();
+		model.bos();
+		model.state[3][2] = SquareState.WHITE;
+		model.state[5][2] = SquareState.WHITE;
+		model.state[6][3] = SquareState.BLACK;
+		List<Move> moves = successors.getSuccessors(model, Player.BLACK);
+		assertEquals(1, moves.size());
+		Move move = moves.get(0);
+		assertEquals(6, move.fromX);
+		assertEquals(3, move.fromY);
+		assertEquals(4, move.toX);
+		assertEquals(1, move.toY);
+		assertNotNull(move.nextMustMove);
+		
+		assertEquals(4, move.nextMustMove.fromX);
+		assertEquals(1, move.nextMustMove.fromY);
+		assertEquals(2, move.nextMustMove.toX);
+		assertEquals(3, move.nextMustMove.toY);
+	}
+	
+	//pek çoklu yeme durumu
+	@Test
+	public void testGetSuccessors72() {		
+		Model model = new Model();
+		model.bos();
+		model.state[1][2] = SquareState.WHITE;
+		model.state[3][2] = SquareState.WHITE;
+		model.state[5][2] = SquareState.WHITE;
+		model.state[6][3] = SquareState.BLACK;
+		List<Move> moves = successors.getSuccessors(model, Player.BLACK);
+		assertEquals(1, moves.size());
+		Move move = moves.get(0);
+		assertEquals(6, move.fromX);
+		assertEquals(3, move.fromY);
+		assertEquals(4, move.toX);
+		assertEquals(1, move.toY);
+		assertNotNull(move.nextMustMove);
+		
+		assertEquals(4, move.nextMustMove.fromX);
+		assertEquals(1, move.nextMustMove.fromY);
+		assertEquals(2, move.nextMustMove.toX);
+		assertEquals(3, move.nextMustMove.toY);
+		
+		assertNotNull(move.nextMustMove.nextMustMove);
+		
+		assertEquals(2, move.nextMustMove.nextMustMove.fromX);
+		assertEquals(3, move.nextMustMove.nextMustMove.fromY);
+		assertEquals(0, move.nextMustMove.nextMustMove.toX);
+		assertEquals(1, move.nextMustMove.nextMustMove.toY);
 	}
 	
 //	//boþ bir tahtada beyaz taþý ve saðdan yiyeceði iki siyah taþý test eder...

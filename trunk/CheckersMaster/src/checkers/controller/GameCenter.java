@@ -2,11 +2,11 @@ package checkers.controller;
 
 import java.io.IOException;
 
-import checkers.algorithm.MinimaxAlgorithm;
+import checkers.algorithm.AlphaBetaAlgorithm;
 import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.evaluation.WeightenedMenCountEvaluation;
+import checkers.evaluation.RatioWeightenedCountEvaluation;
 import checkers.rules.Successors;
 import checkers.sandbox.Board;
 
@@ -52,11 +52,11 @@ public class GameCenter {
 	}
 	
 	public void update(){
-		if(gameFinished)
-			return;
+//		if(gameFinished)
+//			return;
 		lock=!lock;
 		if(!lock){
-			int value = blackPlayer.playTurn(model);
+			double value = blackPlayer.playTurn(model);
 			if(value==Integer.MIN_VALUE){
 				gameFinished = true;
 				System.err.println("yenildim!");
@@ -77,9 +77,9 @@ public class GameCenter {
 		model.baslat();
 		blackPlayer = new Engine(Player.BLACK);
 		CalculationContext calculationContext = new CalculationContext();
-		calculationContext.setAlgorithm(new MinimaxAlgorithm());
-		calculationContext.setDepth(6);
-		calculationContext.setEvaluationFunction(new WeightenedMenCountEvaluation());
+		calculationContext.setAlgorithm(new AlphaBetaAlgorithm());
+		calculationContext.setDepth(18);
+		calculationContext.setEvaluationFunction(new RatioWeightenedCountEvaluation());
 		calculationContext.setPlayer(Player.BLACK);
 		calculationContext.setSuccessorFunction(new Successors());
 		blackPlayer.setCalculationContext(calculationContext);

@@ -9,16 +9,17 @@ import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
-public class AlphaBetaAlgorithm {
+public class AlphaBetaAlgorithm implements IAlgorithm{
 
-	public Move minimax(CalculationContext context, Model model, Player whosTurn) {
+	public Move algorithm(CalculationContext context, Model model, Player whosTurn) {
 		if(context == null || model == null) {
 			throw new IllegalArgumentException();
 		}
-		return minimax(context, model, whosTurn, 0);
+		return alphaBeta(context, model, whosTurn, 0, 0, 0, false, false);
 	}
 
-	/*friendly*/ Move minimax(CalculationContext context, Model model, Player whosTurn, int depth) {
+	Move alphaBeta(CalculationContext context, Model model, Player whosTurn, int depth, 
+				double prunMin, double prunMax, boolean isPrunMinUsed, boolean isPrunMaxUsed) {
 		if(context.getDepth()==depth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
@@ -31,47 +32,73 @@ public class AlphaBetaAlgorithm {
 			return move;
 		}
 		boolean isAssigned = false;
-		int value = 0;
+		double selectedValue = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
 			model.tryMove(move);
-			Move minimax = minimax(context, model, whosTurn.opposite(), depth+1);
+			if(isAssigned){
+				if(context.getPlayer() == whosTurn){
+					prunMin = selectedValue;
+					isPrunMinUsed = true;
+				}else{
+					prunMax = selectedValue;
+					isPrunMaxUsed = true;
+				}					
+			}
+			Move minimax = alphaBeta(context, model, whosTurn.opposite(), depth+1, prunMin, prunMax, isPrunMinUsed, isPrunMaxUsed);
 			if(!isAssigned){
 				isAssigned = true;
-				value = minimax.getValue();
+				selectedValue = minimax.getValue();
 				move.next = minimax;
 				selectedMove = move;
 			}else{
 				if(context.getPlayer() == whosTurn){
-					if(minimax.getValue()> value){
+					if(minimax.getValue()> selectedValue){
 						selectedMove = move;
 						move.next = minimax;
-						value = minimax.getValue();
+						selectedValue = minimax.getValue();
 					}
 				}else{
-					if(minimax.getValue()< value){
+					if(minimax.getValue()< selectedValue){
 						selectedMove = move;
 						move.next = minimax;
-						value = minimax.getValue();
+						selectedValue = minimax.getValue();
 					}
 				}
 			}
 			model.undoTryMove(move);
+			if(context.getPlayer() == whosTurn && isPrunMinUsed){
+				if(prunMin >= selectedValue){
+					selectedMove.setValue(selectedValue);
+					return selectedMove;
+				}
+			}
+			if(context.getPlayer() != whosTurn && isPrunMaxUsed){
+				if(prunMax <= selectedValue){
+					selectedMove.setValue(selectedValue);
+					return selectedMove;
+				}
+			}
 		}
-		selectedMove.setValue(value);
+		selectedMove.setValue(selectedValue);
 		return selectedMove;
 	}
 
-	private int evaluateModel(CalculationContext context, Model model) {
+	private double evaluateModel(CalculationContext context, Model model) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
-		return (int) evaluationFunction.evaluate(model,context.getPlayer());
-		// TODO:geri dönecek olan sayý tipi int deðil double olacak.
+		return evaluationFunction.evaluate(model,context.getPlayer());
+		// TODO:geri dï¿½necek olan sayï¿½ tipi int deï¿½il double olacak.
 	}
 	
 	private List<Move> getSuccessors(CalculationContext context, Model model, Player whosTurn) {
 		ISuccessor successor = context.getSuccessorFunction();
 		List<Move> successors = successor.getSuccessors(model, whosTurn);
 		return successors;
+	}
+
+	@Override
+	public String getName() {
+		return "Alpha Beta Algorithm";
 	}
 
 }

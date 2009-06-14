@@ -34,7 +34,7 @@ public class Engine implements ModelListener{
 		this.player = player;
 	}
 
-	public int playTurn(Model model) {
+	public double playTurn(Model model) {
 		//eğer ben güncellemediysem, rakip güncellemiştir ve sıra bende demektir.
 		//çünkü toplamda iki oyuncu var.
 		IAlgorithm algorithm = calculationContext.getAlgorithm();

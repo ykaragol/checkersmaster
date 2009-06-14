@@ -24,16 +24,16 @@ public class RatioWeightenedCountEvaluation implements IEvaluation{
 				}
 				switch (currentSquare) {
 				case BLACK:
-					whiteCount += MEN_WEIGHT;
-					break;
-				case KING_BLACK:
-					whiteCount += KING_WEIGHT;
-					break;
-				case WHITE:
 					blackCount += MEN_WEIGHT;
 					break;
-				case KING_WHITE:
+				case KING_BLACK:
 					blackCount += KING_WEIGHT;
+					break;
+				case WHITE:
+					whiteCount += MEN_WEIGHT;
+					break;
+				case KING_WHITE:
+					whiteCount += KING_WEIGHT;
 					break;
 				default:
 					break;

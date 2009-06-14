@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import checkers.controller.GameCenter;
 import checkers.domain.Model;
 import checkers.sandbox.Board;
 
@@ -65,6 +66,7 @@ public class MainView extends JFrame{
 			Board board = new Board();
 			Model model = new Model();
 			model.baslat();
+			model.setCallback(new GameCenter());
 			board.setModel(model);
 			mainView.add(board);
 		} catch (IOException e) {
@@ -72,6 +74,6 @@ public class MainView extends JFrame{
 			System.exit(-1);
 		}
 		//mainView.pack();
-		mainView.setSize(612,638);
+		mainView.setSize(610,654);
 	}
 }

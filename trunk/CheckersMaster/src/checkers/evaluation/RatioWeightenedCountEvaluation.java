@@ -42,8 +42,16 @@ public class RatioWeightenedCountEvaluation implements IEvaluation{
 		}
 		
 		if (player==Player.BLACK){
+			if(whiteCount==0)
+				return Integer.MAX_VALUE;
+			else if(blackCount == 0)
+				return Integer.MIN_VALUE;
 			return blackCount/whiteCount;
 		}else{
+			if(blackCount==0)
+				return Integer.MAX_VALUE;
+			else if(whiteCount == 0)
+				return Integer.MIN_VALUE;
 			return whiteCount/blackCount;
 		}		
 	}

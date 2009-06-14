@@ -1,6 +1,5 @@
 package checkers.gui;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -74,6 +73,6 @@ public class MainView extends JFrame{
 			System.exit(-1);
 		}
 		//mainView.pack();
-		mainView.setSize(610,654);
+		mainView.setSize(602,652);
 	}
 }

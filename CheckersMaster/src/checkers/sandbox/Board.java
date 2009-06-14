@@ -79,7 +79,7 @@ public class Board extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawImage(board, 0, 0, 605, 605, null);
+		g.drawImage(board, 0, 0, getHeight(), getWidth(), null);
 		
 		SquareState [][] matrix = model.state;
 		

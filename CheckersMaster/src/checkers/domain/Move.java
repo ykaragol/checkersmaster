@@ -3,7 +3,7 @@ package checkers.domain;
 import checkers.sandbox.SquareState;
 
 public class Move {
-	private int value = Integer.MIN_VALUE;
+	private double value = Double.NEGATIVE_INFINITY;
 	public int fromX;
 	public int fromY;
 	public int toX;
@@ -14,11 +14,11 @@ public class Move {
 	public boolean convert;
 	public Move nextMustMove;
 
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

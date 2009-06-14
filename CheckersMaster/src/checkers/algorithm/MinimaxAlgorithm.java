@@ -33,7 +33,7 @@ public class MinimaxAlgorithm implements IAlgorithm{
 			return move;
 		}
 		boolean isAssigned = false;
-		int value = 0;
+		double value = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
 			model.tryMove(move);
@@ -64,10 +64,9 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		return selectedMove;
 	}
 
-	private int evaluateModel(CalculationContext context, Model model) {
+	private double evaluateModel(CalculationContext context, Model model) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
-		return (int) evaluationFunction.evaluate(model,context.getPlayer());
-		// TODO:geri d�necek olan say� tipi int de�il double olacak.
+		return evaluationFunction.evaluate(model,context.getPlayer());
 	}
 	
 	private List<Move> getSuccessors(CalculationContext context, Model model, Player whosTurn) {

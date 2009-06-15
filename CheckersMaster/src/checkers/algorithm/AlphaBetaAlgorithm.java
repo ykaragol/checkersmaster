@@ -38,12 +38,20 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 			model.tryMove(move);
 			if(isAssigned){
 				if(context.getPlayer() == whosTurn){
-					prunMin = selectedValue;
-					isPrunMinUsed = true;
+					if(isPrunMinUsed){
+						prunMin = prunMin > selectedValue ? selectedValue : prunMin;
+					}else{
+						prunMin = selectedValue;
+						isPrunMinUsed = true;
+					}
 				}else{
-					prunMax = selectedValue;
-					isPrunMaxUsed = true;
-				}					
+					if(isPrunMaxUsed){
+						prunMax = prunMax < selectedValue ? selectedValue : prunMax;
+					}else{
+						prunMax = selectedValue;
+						isPrunMaxUsed = true;
+					}
+				}
 			}
 			Move minimax = alphaBeta(context, model, whosTurn.opposite(), depth+1, prunMin, prunMax, isPrunMinUsed, isPrunMaxUsed);
 			if(!isAssigned){

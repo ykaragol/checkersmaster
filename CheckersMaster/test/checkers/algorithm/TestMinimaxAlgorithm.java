@@ -159,8 +159,6 @@ public class TestMinimaxAlgorithm {
 		assertEquals(0, minimax.next.fromY);
 	}
 	
-	
-	
 }
 
 class EvaluationMock implements IEvaluation{

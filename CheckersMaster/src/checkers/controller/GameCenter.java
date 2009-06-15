@@ -3,10 +3,12 @@ package checkers.controller;
 import java.io.IOException;
 
 import checkers.algorithm.AlphaBetaAlgorithm;
+import checkers.algorithm.MinimaxAlgorithm;
 import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Player;
-import checkers.evaluation.RatioWeightenedCountEvaluation;
+import checkers.evaluation.PlayableWeightenedMenCountEvaluation;
+import checkers.evaluation.WeightenedMenCountEvaluation;
 import checkers.rules.Successors;
 import checkers.sandbox.Board;
 
@@ -77,9 +79,9 @@ public class GameCenter {
 		model.baslat();
 		blackPlayer = new Engine(Player.BLACK);
 		CalculationContext calculationContext = new CalculationContext();
-		calculationContext.setAlgorithm(new AlphaBetaAlgorithm());
-		calculationContext.setDepth(18);
-		calculationContext.setEvaluationFunction(new RatioWeightenedCountEvaluation());
+		calculationContext.setAlgorithm(new MinimaxAlgorithm());
+		calculationContext.setDepth(6);
+		calculationContext.setEvaluationFunction(new WeightenedMenCountEvaluation());
 		calculationContext.setPlayer(Player.BLACK);
 		calculationContext.setSuccessorFunction(new Successors());
 		blackPlayer.setCalculationContext(calculationContext);

@@ -8,7 +8,6 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 
 import checkers.domain.Model;
 import checkers.domain.Move;
-import checkers.domain.Player;
 import checkers.rules.Successors;
 
 

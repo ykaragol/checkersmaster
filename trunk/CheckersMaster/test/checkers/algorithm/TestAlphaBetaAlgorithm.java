@@ -6,9 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,9 +13,7 @@ import checkers.domain.CalculationContext;
 import checkers.domain.Model;
 import checkers.domain.Move;
 import checkers.domain.Player;
-import checkers.evaluation.IEvaluation;
 import checkers.evaluation.MenCountEvaluation;
-import checkers.rules.ISuccessor;
 import checkers.rules.Successors;
 import checkers.sandbox.SquareState;
 
@@ -158,5 +153,5 @@ public class TestAlphaBetaAlgorithm {
 		assertEquals(5, minimax.next.fromX);
 		assertEquals(0, minimax.next.fromY);
 	}
-		
+
 }

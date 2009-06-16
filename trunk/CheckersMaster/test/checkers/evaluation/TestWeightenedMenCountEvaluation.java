@@ -11,12 +11,12 @@ import checkers.sandbox.SquareState;
 
 public class TestWeightenedMenCountEvaluation {
 
-	private WeightenedMenCountEvaluation eval;
+	private EnhancedWeightenedMenCountEvaluation eval;
 	private Model m;
 
 	@Before
 	public void setup() {
-		eval = new WeightenedMenCountEvaluation();
+		eval = new EnhancedWeightenedMenCountEvaluation();
 		m = new Model();
 		m.state = new SquareState[8][8];
 		init(m);
@@ -45,28 +45,28 @@ public class TestWeightenedMenCountEvaluation {
 	public void testEvaluateOne() {
 		m.state[2][2] = SquareState.WHITE;
 		double value = eval.evaluate(m, Player.WHITE);
-		assertEquals(WeightenedMenCountEvaluation.MEN_WEIGHT, value);
+		assertEquals(EnhancedWeightenedMenCountEvaluation.MEN_WEIGHT, value);
 	}
 	
 	@Test
 	public void testEvaluateOneBlack() {
 		m.state[2][2] = SquareState.WHITE;
 		double value = eval.evaluate(m, Player.BLACK);
-		assertEquals(-1*WeightenedMenCountEvaluation.MEN_WEIGHT, value);
+		assertEquals(-1*EnhancedWeightenedMenCountEvaluation.MEN_WEIGHT, value);
 	}
 
 	@Test
 	public void testEvaluateOneKing() {
 		m.state[2][2] = SquareState.KING_WHITE;
 		double value = eval.evaluate(m, Player.WHITE);
-		assertEquals(WeightenedMenCountEvaluation.KING_WEIGHT, value);
+		assertEquals(EnhancedWeightenedMenCountEvaluation.KING_WEIGHT, value);
 	}
 	
 	@Test
 	public void testEvaluateOneBlackKing() {
 		m.state[2][2] = SquareState.KING_BLACK;
 		double value = eval.evaluate(m, Player.WHITE);
-		assertEquals(-1*WeightenedMenCountEvaluation.KING_WEIGHT, value);
+		assertEquals(-1*EnhancedWeightenedMenCountEvaluation.KING_WEIGHT, value);
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class TestWeightenedMenCountEvaluation {
 		m.state[6][2] = SquareState.WHITE;
 		m.state[7][2] = SquareState.KING_BLACK;
 		m.state[5][2] = SquareState.BLACK;
-		int expected = 3 * WeightenedMenCountEvaluation.MEN_WEIGHT + WeightenedMenCountEvaluation.KING_WEIGHT;
+		int expected = 3 * EnhancedWeightenedMenCountEvaluation.MEN_WEIGHT + EnhancedWeightenedMenCountEvaluation.KING_WEIGHT;
 
 		double value = eval.evaluate(m, Player.WHITE);
 		assertEquals(expected, value);

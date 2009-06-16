@@ -3,10 +3,6 @@ package checkers.domain;
 import checkers.controller.GameCenter;
 import checkers.sandbox.SquareState;
 
-/**
- * 
- * @author hacer
- */
 public class Model {
 	
 	public SquareState state[][];

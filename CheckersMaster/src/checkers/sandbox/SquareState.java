@@ -2,11 +2,6 @@ package checkers.sandbox;
 
 import checkers.domain.Player;
 
-/**
- * 
- * @author yusuf
- *
- */
 public enum SquareState{
 	BLANK (null),
 	WHITE (Player.WHITE),

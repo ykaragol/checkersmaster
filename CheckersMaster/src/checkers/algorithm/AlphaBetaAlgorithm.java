@@ -95,7 +95,6 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 	private double evaluateModel(CalculationContext context, Model model) {
 		IEvaluation evaluationFunction = context.getEvaluationFunction();
 		return evaluationFunction.evaluate(model,context.getPlayer());
-		// TODO:geri d�necek olan say� tipi int de�il double olacak.
 	}
 	
 	private List<Move> getSuccessors(CalculationContext context, Model model, Player whosTurn) {

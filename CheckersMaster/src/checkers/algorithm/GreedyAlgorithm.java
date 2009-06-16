@@ -11,8 +11,6 @@ import checkers.rules.ISuccessor;
 
 /**
  * Greedy Algoritması uygulaması
- * 
- * @author ozge
  *
  */
 public class GreedyAlgorithm implements IAlgorithm{

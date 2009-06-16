@@ -19,7 +19,7 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		return minimax(context, model, whosTurn, 0);
 	}
 
-	/*friendly*/ Move minimax(CalculationContext context, Model model, Player whosTurn, int depth) {
+	Move minimax(CalculationContext context, Model model, Player whosTurn, int depth) {
 		if(context.getDepth()==depth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));

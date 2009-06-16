@@ -46,7 +46,13 @@ public class MainView extends JFrame{
 		JMenu jmenu2 = new JMenu("About");
 		
 		JMenuItem jMenuItem3 = new JMenuItem("Pathfinders");
-		//jMenuItem3.addActionListener(new ConfigurationItemListener());
+		jMenuItem3.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String str = "GROUP MEMBERS: \nH. Özge Bacak - e160021@metu.edu.tr\nHacer Çatal - e164175@metu.edu.tr\nYusuf Karagöl - e159582@metu.edu.tr";
+				JOptionPane.showMessageDialog(MainView.this, str , "Pathfinders", JOptionPane.INFORMATION_MESSAGE);
+			}			
+		});
 		jmenu2.add(jMenuItem3);
 		
 		JMenuBar jmenubar = new JMenuBar();

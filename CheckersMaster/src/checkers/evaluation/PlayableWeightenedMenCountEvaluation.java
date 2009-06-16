@@ -36,8 +36,8 @@ public class PlayableWeightenedMenCountEvaluation implements IEvaluation{
 				s.handleStone(linkedList, m, i, j);
 				double c = 1;
 				if(linkedList.size()==0){
-					c=0.9;
-				}				
+					c=0.7;
+				}		
 				switch (currentSquare) {
 				case BLACK:
 					count += ((double)MEN_WEIGHT)*c;

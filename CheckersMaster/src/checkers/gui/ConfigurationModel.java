@@ -9,7 +9,7 @@ import checkers.algorithm.MinimaxAlgorithm;
 import checkers.evaluation.IEvaluation;
 import checkers.evaluation.MenCountEvaluation;
 import checkers.evaluation.RatioWeightenedCountEvaluation;
-import checkers.evaluation.WeightenedMenCountEvaluation;
+import checkers.evaluation.EnhancedWeightenedMenCountEvaluation;
 
 public class ConfigurationModel {
 
@@ -29,7 +29,7 @@ public class ConfigurationModel {
 	{
 		evaluations.add(new MenCountEvaluation());
 		evaluations.add(new RatioWeightenedCountEvaluation());
-		evaluations.add(new WeightenedMenCountEvaluation());
+		evaluations.add(new EnhancedWeightenedMenCountEvaluation());
 	}
 	
 	private IEvaluation selectedEvaluation;

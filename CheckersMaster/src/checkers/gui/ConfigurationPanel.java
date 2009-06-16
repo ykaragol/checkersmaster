@@ -26,6 +26,7 @@ public class ConfigurationPanel extends JPanel{
 	private JButton buttonSave;
 	
 	private ConfigurationModel model;
+	private MainView callBack;
 	
 	public ConfigurationModel getConfigurationModel() {
 		return model;
@@ -49,7 +50,7 @@ public class ConfigurationPanel extends JPanel{
 
 	private void updateModelClicked(){
 		convertAndUpdateModel();
-		//TODO ...
+		callBack.configurationUpdated(model);
 	}
 
 	private void convertAndUpdateModel() {
@@ -58,7 +59,8 @@ public class ConfigurationPanel extends JPanel{
 		model.setSelectedDepth((Integer)cmbDepthCombo.getSelectedItem());
 	}
 
-	public ConfigurationPanel(){
+	public ConfigurationPanel(MainView callBack){
+		this.callBack = callBack;
 		init();
 	}
 	
@@ -173,14 +175,14 @@ public class ConfigurationPanel extends JPanel{
 	} 
 	
 
-	public static void main(String[] args) {
-		ConfigurationPanel panel = new ConfigurationPanel();
-		panel.setConfigurationModel(new ConfigurationModel());
-		JFrame frame = new JFrame("Game Configuration");
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		frame.setContentPane( panel );
-		frame.pack();
-		frame.setResizable(false);
-		frame.setVisible( true );
-	}
+//	public static void main(String[] args) {
+//		ConfigurationPanel panel = new ConfigurationPanel();
+//		panel.setConfigurationModel(new ConfigurationModel());
+//		JFrame frame = new JFrame("Game Configuration");
+//		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+//		frame.setContentPane( panel );
+//		frame.pack();
+//		frame.setResizable(false);
+//		frame.setVisible( true );
+//	}
 }

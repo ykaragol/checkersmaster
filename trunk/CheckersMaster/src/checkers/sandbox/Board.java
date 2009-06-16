@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import checkers.domain.Model;
@@ -58,8 +57,6 @@ public class Board extends JPanel {
 	public Board() throws IOException {
 		File f = new File("./img/board.jpg");
 		board = ImageIO.read(f);
-		addMouseListener(new BoardMouseListener());
-		addMouseMotionListener(new BoardMouseMotionListener());
 		
 		f = new File("./img/white.gif");
 		black = ImageIO.read(f);
@@ -72,6 +69,9 @@ public class Board extends JPanel {
 		
 		f = new File("./img/kingBlack.gif");
 		kingWhite = ImageIO.read(f);
+		
+		addMouseListener(new BoardMouseListener());
+		addMouseMotionListener(new BoardMouseMotionListener());
 	}
 
 	@Override

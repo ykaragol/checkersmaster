@@ -9,6 +9,7 @@ import checkers.domain.Move;
 import checkers.domain.Player;
 import checkers.evaluation.EnhancedWeightenedMenCountEvaluation;
 import checkers.gui.ConfigurationModel;
+import checkers.gui.MainView;
 import checkers.rules.Successors;
 import checkers.sandbox.Board;
 
@@ -54,48 +55,43 @@ public class GameCenter {
 //	}
 	
 	public void update(){
-//		if(gameFinished)
-//			return;
+		if(gameFinished)
+			return;
 		lock=!lock;
 		if(!lock){
 			List<Move> listBlack = successors.getSuccessors(model, Player.BLACK);
 			if(listBlack==null || listBlack.size()==0){
 				System.err.println("yenildim!");
+				callback.gameFinished(false);
 				gameFinished = true;
+				board.updateUI();
+				return;
 			}
 			blackPlayer.playTurn(model);
 			List<Move> listWhite = successors.getSuccessors(model, Player.WHITE);
 			if(listWhite==null || listWhite.size()==0){
 				System.err.println("yendim!");
+				callback.gameFinished(true);
 				gameFinished = true;
 			}
 		}
 		board.updateUI();
 	}
-	private boolean gameFinished = false;
+	
+	private boolean gameFinished ;
 
 	private Successors successors;
-	
-//	public void run() throws IOException{
-//		model = new Model();
-//		b = Board.init(model);
-//		model.setCallback(this);
-//		model.baslat();
-//		blackPlayer = new Engine(Player.BLACK);
-//		CalculationContext calculationContext = new CalculationContext();
-//		calculationContext.setAlgorithm(new MinimaxAlgorithm());
-//		calculationContext.setDepth(6);
-//		calculationContext.setEvaluationFunction(new EnhancedWeightenedMenCountEvaluation());
-//		calculationContext.setPlayer(Player.BLACK);
-//		calculationContext.setSuccessorFunction(new Successors());
-//		blackPlayer.setCalculationContext(calculationContext);
-//		//center();
-//	}
-	
+
+	private MainView callback;
+
 	public GameCenter(){
 		model = new Model();
-		model.baslat();
 		model.setCallback(this);
+		initNewGame();
+	}
+
+	public void initNewGame() {
+		model.baslat();
 		
 		blackPlayer = new Engine(Player.BLACK);
 		CalculationContext calculationContext = new CalculationContext();
@@ -106,6 +102,9 @@ public class GameCenter {
 		successors = new Successors();
 		calculationContext.setSuccessorFunction(successors);
 		blackPlayer.setCalculationContext(calculationContext);
+		if(board!=null)
+			board.updateUI();
+		gameFinished = false;
 	}
 	
 	public void configurationChanged(ConfigurationModel newConfigurationModel){
@@ -125,5 +124,9 @@ public class GameCenter {
 	public void setBoard(Board board) {
 		this.board = board;
 		board.setModel(model);
+	}
+
+	public void setCallback(MainView mainView) {
+		this.callback = mainView;
 	}
 }

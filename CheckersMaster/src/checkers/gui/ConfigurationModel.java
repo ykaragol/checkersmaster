@@ -3,20 +3,24 @@ package checkers.gui;
 import java.util.LinkedList;
 import java.util.List;
 
+import checkers.algorithm.AlphaBetaAlgorithm;
 import checkers.algorithm.GreedyAlgorithm;
 import checkers.algorithm.IAlgorithm;
 import checkers.algorithm.MinimaxAlgorithm;
 import checkers.evaluation.IEvaluation;
 import checkers.evaluation.MenCountEvaluation;
+import checkers.evaluation.PlayableWeightenedMenCountEvaluation;
 import checkers.evaluation.RatioWeightenedCountEvaluation;
 import checkers.evaluation.EnhancedWeightenedMenCountEvaluation;
+import checkers.evaluation.WeightenedMenCountEvaluation;
 
 public class ConfigurationModel {
 
 	private List<IAlgorithm> algorithms = new LinkedList<IAlgorithm>();
 	{
-		algorithms.add(new MinimaxAlgorithm());
 		algorithms.add(new GreedyAlgorithm());
+		algorithms.add(new MinimaxAlgorithm());
+		algorithms.add(new AlphaBetaAlgorithm());
 	}
 	
 	private IAlgorithm selectedAlgorithm = null;
@@ -28,8 +32,10 @@ public class ConfigurationModel {
 	private List<IEvaluation> evaluations = new LinkedList<IEvaluation>();
 	{
 		evaluations.add(new MenCountEvaluation());
+		evaluations.add(new WeightenedMenCountEvaluation());
 		evaluations.add(new RatioWeightenedCountEvaluation());
 		evaluations.add(new EnhancedWeightenedMenCountEvaluation());
+		evaluations.add(new PlayableWeightenedMenCountEvaluation());
 	}
 	
 	private IEvaluation selectedEvaluation;

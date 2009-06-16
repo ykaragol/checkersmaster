@@ -5,14 +5,13 @@ import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
 /**
- * T�m algoritmalar i�in yap�land�rma parametreleri i�erir.
- * @author hacer_catal
- *
+ * Tüm algoritmalar için yapılandırma parametreleri içerir.
+ * 
  */
 public class CalculationContext{
 
 	private int depth;
-	private Player player;//player'�n context'te olmas� do�ru olmayabilir...
+	private Player player;
 	private IEvaluation evaluationFunction;
 	private ISuccessor successorFunction;
 	private IAlgorithm algorithm;

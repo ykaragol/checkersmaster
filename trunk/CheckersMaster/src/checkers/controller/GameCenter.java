@@ -16,8 +16,6 @@ import checkers.sandbox.Board;
 /**
  * Oyuna ait tüm bilgileri tutan kesim. 
  * 
- * @author yusuf
- *
  */
 public class GameCenter {
 	

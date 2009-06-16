@@ -30,10 +30,8 @@ import checkers.rules.Successors;
 */
 
 /**
- * Checkers i�in oyun tahtas�n� olu�turan kod.
+ * Checkers için oyun tahtasını oluşturan kod.
  * 
- * 
- * @author ykaragol
  */
 @SuppressWarnings("serial")
 public class Board extends JPanel {

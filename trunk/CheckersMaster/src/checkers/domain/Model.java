@@ -53,7 +53,8 @@ public class Model {
 				state[move.toX][move.toY]=state[move.toX][move.toY].convertKing();
 				move.convert = true;
 			}
-				
+		if(move.nextMustMove != null)
+			tryMove(move.nextMustMove);
 	}
 
 	public void doMove(Move move) {
@@ -77,6 +78,12 @@ public class Model {
 	
 	
 	public void undoTryMove(Move move) {
+		if(move.nextMustMove != null)
+			undoTryMove(move.nextMustMove);
+		undoTryMoveHelper(move);
+	}
+
+	private void undoTryMoveHelper(Move move) {
 		state[move.fromX][move.fromY]=state[move.toX][move.toY];
 		state[move.toX][move.toY] = SquareState.BLANK;
 		if(move.eat != null){

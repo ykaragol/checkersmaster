@@ -20,7 +20,7 @@ public class PlayableWeightenedMenCountEvaluation implements IEvaluation{
 	
 	@Override
 	public double evaluate(Model m, Player player) {
-		int count = 0;
+		double count = 0;
 		SquareState[][] state = m.state;
 		for (int i = 0; i < state.length; i++) {
 			for (int j = 0; j < state[i].length; j++) {
@@ -36,20 +36,20 @@ public class PlayableWeightenedMenCountEvaluation implements IEvaluation{
 				s.handleStone(linkedList, m, i, j);
 				double c = 1;
 				if(linkedList.size()==0){
-					c=0.9;
+					c=0.7;
 				}				
 				switch (currentSquare) {
 				case BLACK:
-					count += MEN_WEIGHT*c;
+					count += ((double)MEN_WEIGHT)*c;
 					break;
 				case KING_BLACK:
-					count += KING_WEIGHT*c;
+					count += ((double)KING_WEIGHT)*c;
 					break;
 				case WHITE:
-					count -= WMEN_WEIGHT*c;
+					count -= ((double)WMEN_WEIGHT)*c;
 					break;
 				case KING_WHITE:
-					count -= WKING_WEIGHT*c;
+					count -= ((double)WKING_WEIGHT)*c;
 					break;
 				default:
 					break;

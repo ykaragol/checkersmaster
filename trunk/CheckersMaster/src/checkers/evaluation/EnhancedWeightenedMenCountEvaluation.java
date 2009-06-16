@@ -4,7 +4,7 @@ import checkers.domain.Model;
 import checkers.domain.Player;
 import checkers.sandbox.SquareState;
 
-public class WeightenedMenCountEvaluation implements IEvaluation{
+public class EnhancedWeightenedMenCountEvaluation implements IEvaluation{
 	
 	/*friendly*/ final static int MEN_WEIGHT = 8;
 	/*friendly*/ final static int KING_WEIGHT = 12;

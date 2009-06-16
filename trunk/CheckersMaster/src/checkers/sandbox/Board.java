@@ -62,16 +62,16 @@ public class Board extends JPanel {
 		addMouseMotionListener(new BoardMouseMotionListener());
 		
 		f = new File("./img/white.gif");
-		white = ImageIO.read(f);
-		
-		f = new File("./img/black.gif");
 		black = ImageIO.read(f);
 		
+		f = new File("./img/black.gif");
+		white = ImageIO.read(f);
+		
 		f = new File("./img/kingWhite.gif");
-		kingWhite = ImageIO.read(f);
+		kingBlack = ImageIO.read(f);
 		
 		f = new File("./img/kingBlack.gif");
-		kingBlack = ImageIO.read(f);
+		kingWhite = ImageIO.read(f);
 	}
 
 	@Override
@@ -193,17 +193,17 @@ public class Board extends JPanel {
 		
 	}
 	
-	public static Board init(Model model) throws IOException {
-		Board b = new Board();
-		b.model = model;
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(2, 2, 610, 636);
-		frame.add(b);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		return b;
-	}
+//	public static Board init(Model model) throws IOException {
+//		Board b = new Board();
+//		b.model = model;
+//		JFrame frame = new JFrame();
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setBounds(2, 2, 610, 636);
+//		frame.add(b);
+//		frame.setResizable(false);
+//		frame.setVisible(true);
+//		return b;
+//	}
 
 	public void setModel(Model model) {
 		this.model = model;

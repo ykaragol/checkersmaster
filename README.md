@@ -11,6 +11,8 @@ Implementation includes:
 3. Min-Max Algorithm with Alpha-Beta Pruning
 
 Various evaluation methods are presented such as:
+
+
 1. Men Count Evaluation: This evaluation type basically evaluates which player has most men and kings.
 
 2. Weightened Men Count Evaluation: Men and kings have different weights.

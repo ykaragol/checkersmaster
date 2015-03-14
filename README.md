@@ -1,6 +1,7 @@
 # checkersmaster
 Checkers Game Implementation, runs on Java Desktop Environment (Swing Application)
 
+
 Implementation includes:
 
 
@@ -9,6 +10,8 @@ Implementation includes:
 2. Min-Max Algorithm
 
 3. Min-Max Algorithm with Alpha-Beta Pruning
+
+
 
 Various evaluation methods are presented such as:
 

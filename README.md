@@ -3,25 +3,16 @@ Checkers Game Implementation, runs on Java Desktop Environment (Swing Applicatio
 
 
 Implementation includes:
-
-
-1. Greedy Algorithm
-
-2. Min-Max Algorithm
-
-3. Min-Max Algorithm with Alpha-Beta Pruning
-
+- Greedy Algorithm
+- Min-Max Algorithm
+- Min-Max Algorithm with Alpha-Beta Pruning
 
 
 Various evaluation methods are presented such as:
 
+- Men Count Evaluation: This evaluation type basically evaluates which player has most men and kings.
+- Weightened Men Count Evaluation: Men and kings have different weights.
+- Playable Weightened Men Count Evaluation: If a man of king cannot play, it is not counted.
+- Ratio Weightened Men Count Evaluation: Compares not the count of men or kings, but ratio of count.
 
-1. Men Count Evaluation: This evaluation type basically evaluates which player has most men and kings.
-
-2. Weightened Men Count Evaluation: Men and kings have different weights.
-
-3. Playable Weightened Men Count Evaluation: If a man of king cannot play, it is not counted.
-
-4. Ratio Weightened Men Count Evaluation: Compares not the count of men or kings, but ratio of count.
-
-Migrated from Google Code
+*Migrated from Google Code*

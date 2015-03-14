@@ -23,3 +23,5 @@ Various evaluation methods are presented such as:
 3. Playable Weightened Men Count Evaluation: If a man of king cannot play, it is not counted.
 
 4. Ratio Weightened Men Count Evaluation: Compares not the count of men or kings, but ratio of count.
+
+Migrated from Google Code

@@ -9,6 +9,9 @@ import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
+/**
+ * Alpha-Beta Pruning Algorithm Implementation
+ */ 
 public class AlphaBetaAlgorithm implements IAlgorithm{
 
 	public Move algorithm(CalculationContext context, Model model, Player whosTurn) {

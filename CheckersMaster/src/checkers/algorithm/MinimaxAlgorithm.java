@@ -20,12 +20,16 @@ public class MinimaxAlgorithm implements IAlgorithm{
 	}
 
 	Move minimax(CalculationContext context, Model model, Player whosTurn, int currentDepth) {
+		//check if reached target-depth
 		if(context.getDepth()==currentDepth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
 			return move;
 		}
+		
+		//get all possible moves:
 		List<Move> successors = getSuccessors(context, model, whosTurn);
+		//if there is no possible move, set min or max value
 		if(successors.isEmpty()){
 			Move move = new Move();
 			int value = context.getPlayer() == whosTurn ? Integer.MIN_VALUE : Integer.MAX_VALUE; 
@@ -36,18 +40,20 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		double value = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
-			model.tryMove(move);
+			model.tryMove(move); // make move
 			
+			//recursion:
 			Move minimax = minimax(context, model, whosTurn.opposite(), currentDepth+1);
-			if(selectedMove == null 
-				|| (context.getPlayer() == whosTurn && minimax.getValue()> value)
-				|| (context.getPlayer() != whosTurn && minimax.getValue()< value)){
+			if(selectedMove == null 												//to set initial move
+				|| (context.getPlayer() == whosTurn && minimax.getValue()> value)	//max value is desired for computer
+				|| (context.getPlayer() != whosTurn && minimax.getValue()< value)){ //min value is desired for opponent
+				
 				value = minimax.getValue();
 				move.next = minimax;
 				selectedMove = move;
 			}
 			
-			model.undoTryMove(move);
+			model.undoTryMove(move); // remove move back
 		}
 		selectedMove.setValue(value);
 		return selectedMove;

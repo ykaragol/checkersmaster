@@ -21,25 +21,33 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 		return alphaBeta(context, model, whosTurn, 0, 0, 0, false, false);
 	}
 
-	Move alphaBeta(CalculationContext context, Model model, Player whosTurn, int depth, 
+	Move alphaBeta(CalculationContext context, Model model, Player whosTurn, int currentDepth, 
 				double prunMin, double prunMax, boolean isPrunMinUsed, boolean isPrunMaxUsed) {
-		if(context.getDepth()==depth){
+		
+		//check if reached target-depth
+		if(context.getDepth()==currentDepth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
 			return move;
 		}
+		
+		//get all possible moves:
 		List<Move> successors = getSuccessors(context, model, whosTurn);
+		//if there is no possible move, set min or max value
 		if(successors.isEmpty()){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
 			return move;
 		}
-		boolean isAssigned = false;
+		
+		
 		double selectedValue = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
-			model.tryMove(move);
-			if(isAssigned){
+			model.tryMove(move);// make move
+			
+			//to calculate pruning values:
+			if(selectedMove!=null){
 				if(context.getPlayer() == whosTurn){
 					if(isPrunMinUsed){
 						prunMin = prunMin > selectedValue ? selectedValue : prunMin;
@@ -56,28 +64,21 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 					}
 				}
 			}
-			Move minimax = alphaBeta(context, model, whosTurn.opposite(), depth+1, prunMin, prunMax, isPrunMinUsed, isPrunMaxUsed);
-			if(!isAssigned){
-				isAssigned = true;
+			
+			//recursion:
+			Move minimax = alphaBeta(context, model, whosTurn.opposite(), currentDepth+1, prunMin, prunMax, isPrunMinUsed, isPrunMaxUsed);
+			if(selectedMove==null																//to set initial move
+					|| (context.getPlayer() == whosTurn && minimax.getValue()> selectedValue)	//max value is desired for computer
+					|| (context.getPlayer() != whosTurn && minimax.getValue()< selectedValue)){ //min value is desired for opponent
+				
 				selectedValue = minimax.getValue();
 				move.next = minimax;
 				selectedMove = move;
-			}else{
-				if(context.getPlayer() == whosTurn){
-					if(minimax.getValue()> selectedValue){
-						selectedMove = move;
-						move.next = minimax;
-						selectedValue = minimax.getValue();
-					}
-				}else{
-					if(minimax.getValue()< selectedValue){
-						selectedMove = move;
-						move.next = minimax;
-						selectedValue = minimax.getValue();
-					}
-				}
 			}
-			model.undoTryMove(move);
+			
+			model.undoTryMove(move); // remove move back
+			
+			//to make pruning:
 			if(context.getPlayer() == whosTurn && isPrunMinUsed){
 				if(prunMin >= selectedValue){
 					selectedMove.setValue(selectedValue);

@@ -19,8 +19,8 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		return minimax(context, model, whosTurn, 0);
 	}
 
-	Move minimax(CalculationContext context, Model model, Player whosTurn, int depth) {
-		if(context.getDepth()==depth){
+	Move minimax(CalculationContext context, Model model, Player whosTurn, int currentDepth) {
+		if(context.getDepth()==currentDepth){
 			Move move = new Move();
 			move.setValue(evaluateModel(context, model));
 			return move;
@@ -32,32 +32,21 @@ public class MinimaxAlgorithm implements IAlgorithm{
 			move.setValue(value);
 			return move;
 		}
-		boolean isAssigned = false;
+		
 		double value = 0;
 		Move selectedMove = null;
 		for (Move move : successors) {
 			model.tryMove(move);
-			Move minimax = minimax(context, model, whosTurn.opposite(), depth+1);
-			if(!isAssigned){
-				isAssigned = true;
+			
+			Move minimax = minimax(context, model, whosTurn.opposite(), currentDepth+1);
+			if(selectedMove == null 
+				|| (context.getPlayer() == whosTurn && minimax.getValue()> value)
+				|| (context.getPlayer() != whosTurn && minimax.getValue()< value)){
 				value = minimax.getValue();
 				move.next = minimax;
 				selectedMove = move;
-			}else{
-				if(context.getPlayer() == whosTurn){
-					if(minimax.getValue()> value){
-						selectedMove = move;
-						move.next = minimax;
-						value = minimax.getValue();
-					}
-				}else{
-					if(minimax.getValue()< value){
-						selectedMove = move;
-						move.next = minimax;
-						value = minimax.getValue();
-					}
-				}
 			}
+			
 			model.undoTryMove(move);
 		}
 		selectedMove.setValue(value);

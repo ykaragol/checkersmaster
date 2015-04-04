@@ -16,6 +16,7 @@ public class MinimaxAlgorithm implements IAlgorithm{
 		if(context == null || model == null) {
 			throw new IllegalArgumentException();
 		}
+		//set initial values to start recursion:
 		return minimax(context, model, whosTurn, 0);
 	}
 
@@ -44,8 +45,8 @@ public class MinimaxAlgorithm implements IAlgorithm{
 			
 			//recursion:
 			Move minimax = minimax(context, model, whosTurn.opposite(), currentDepth+1);
-			if(selectedMove == null 												//to set initial move
-				|| (context.getPlayer() == whosTurn && minimax.getValue()> value)	//max value is desired for computer
+			if(selectedMove == null                                                 //to set initial move
+				|| (context.getPlayer() == whosTurn && minimax.getValue()> value)   //max value is desired for computer
 				|| (context.getPlayer() != whosTurn && minimax.getValue()< value)){ //min value is desired for opponent
 				
 				value = minimax.getValue();

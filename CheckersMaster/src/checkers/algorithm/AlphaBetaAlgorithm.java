@@ -18,6 +18,7 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 		if(context == null || model == null) {
 			throw new IllegalArgumentException();
 		}
+		//set initial values to start recursion:
 		return alphaBeta(context, model, whosTurn, 0, 0, 0, false, false);
 	}
 
@@ -67,8 +68,8 @@ public class AlphaBetaAlgorithm implements IAlgorithm{
 			
 			//recursion:
 			Move minimax = alphaBeta(context, model, whosTurn.opposite(), currentDepth+1, prunMin, prunMax, isPrunMinUsed, isPrunMaxUsed);
-			if(selectedMove==null																//to set initial move
-					|| (context.getPlayer() == whosTurn && minimax.getValue()> selectedValue)	//max value is desired for computer
+			if(selectedMove==null                                                               //to set initial move
+					|| (context.getPlayer() == whosTurn && minimax.getValue()> selectedValue)   //max value is desired for computer
 					|| (context.getPlayer() != whosTurn && minimax.getValue()< selectedValue)){ //min value is desired for opponent
 				
 				selectedValue = minimax.getValue();

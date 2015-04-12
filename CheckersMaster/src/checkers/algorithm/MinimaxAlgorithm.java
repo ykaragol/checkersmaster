@@ -9,6 +9,9 @@ import checkers.domain.Player;
 import checkers.evaluation.IEvaluation;
 import checkers.rules.ISuccessor;
 
+/**
+ * Minimax (Min-Max) Algorithm Implementation
+ */ 
 public class MinimaxAlgorithm implements IAlgorithm{
 
 	@Override
